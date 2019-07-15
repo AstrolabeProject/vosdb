@@ -1,0 +1,7 @@
+.git
+.pgpass
+addSelfSuperuser.sql
+Dockerfile
+docker-compose.yml
+Makefile
+pgdata
