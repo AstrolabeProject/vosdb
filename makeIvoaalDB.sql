@@ -3,6 +3,12 @@
 --
 CREATE DATABASE ivoaal;
 
+CREATE ROLE readonly;
+GRANT CONNECT ON DATABASE ivoaal TO readonly;
+
+CREATE ROLE readwrite;
+GRANT CONNECT ON DATABASE ivoaal TO readwrite;
+
 --
 -- Create admin and query users for the database.
 --

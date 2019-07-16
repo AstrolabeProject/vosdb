@@ -8,6 +8,14 @@ CREATE SCHEMA vos;
 ALTER SCHEMA vos OWNER TO astrolabe;
 
 --
+-- Usage grants on the VOS schema
+--
+GRANT USAGE ON SCHEMA vos TO alquery;
+GRANT USAGE ON SCHEMA vos TO readonly;
+GRANT USAGE, CREATE ON SCHEMA vos TO readwrite;
+
+
+--
 -- Add the Q3C extension, which is needed for indexing.
 -- NB: Extensions can only be created by a user with the Superuser attribute.
 --

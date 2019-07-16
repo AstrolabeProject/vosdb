@@ -18,7 +18,6 @@ SET search_path TO vos, public;
 --
 -- Name: exposure; Type: TABLE; Schema: vos; Owner: astrolabe
 --
-
 CREATE TABLE vos.exposure (
     ra_j2000 double precision,
     dec_j2000 double precision,
@@ -62,13 +61,12 @@ CREATE TABLE vos.exposure (
     is_public integer
 );
 
-
 ALTER TABLE vos.exposure OWNER TO astrolabe;
+
 
 --
 -- Name: obscore; Type: TABLE; Schema: vos; Owner: astrolabe
 --
-
 CREATE TABLE vos.obscore (
     s_ra double precision,
     s_dec double precision,
@@ -103,13 +101,12 @@ CREATE TABLE vos.obscore (
     is_public integer
 );
 
-
 ALTER TABLE vos.obscore OWNER TO astrolabe;
+
 
 --
 -- Name: siav1; Type: TABLE; Schema: vos; Owner: astrolabe
 --
-
 CREATE TABLE vos.siav1 (
     s_ra double precision,
     s_dec double precision,
@@ -184,13 +181,12 @@ CREATE TABLE vos.siav1 (
     is_public integer
 );
 
-
 ALTER TABLE vos.siav1 OWNER TO astrolabe;
+
 
 --
 -- Name: siav2; Type: TABLE; Schema: vos; Owner: astrolabe
 --
-
 CREATE TABLE vos.siav2 (
     spat_loc1 double precision,
     spat_loc2 double precision,
@@ -256,13 +252,12 @@ CREATE TABLE vos.siav2 (
     filter character varying(32)
 );
 
-
 ALTER TABLE vos.siav2 OWNER TO astrolabe;
+
 
 --
 -- Name: exp_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exp_q3c_idx ON vos.exposure USING btree (public.q3c_ang2ipix(ra_j2000, dec_j2000));
 
 ALTER TABLE vos.exposure CLUSTER ON exp_q3c_idx;
@@ -271,70 +266,60 @@ ALTER TABLE vos.exposure CLUSTER ON exp_q3c_idx;
 --
 -- Name: exposure_dec_j2000_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_dec_j2000_idx ON vos.exposure USING btree (dec_j2000);
 
 
 --
 -- Name: exposure_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
 --
-
 CREATE INDEX exposure_exptime_idx ON vos.exposure USING btree (exptime);
 
 
 --
 -- Name: exposure_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_fileref_idx ON vos.exposure USING btree (fileref);
 
 
 --
 -- Name: exposure_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_filter_idx ON vos.exposure USING btree (filter);
 
 
 --
 -- Name: exposure_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_is_public_idx ON vos.exposure USING btree (is_public);
 
 
 --
 -- Name: exposure_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_mjd_obs_idx ON vos.exposure USING btree (mjd_obs);
 
 
 --
 -- Name: exposure_proctype_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_proctype_idx ON vos.exposure USING btree (proctype);
 
 
 --
 -- Name: exposure_prodtype_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_prodtype_idx ON vos.exposure USING btree (prodtype);
 
 
 --
 -- Name: exposure_ra_j2000_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX exposure_ra_j2000_idx ON vos.exposure USING btree (ra_j2000);
 
 
 --
 -- Name: obs_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obs_q3c_idx ON vos.obscore USING btree (public.q3c_ang2ipix(s_ra, s_dec));
 
 ALTER TABLE vos.obscore CLUSTER ON obs_q3c_idx;
@@ -343,119 +328,102 @@ ALTER TABLE vos.obscore CLUSTER ON obs_q3c_idx;
 --
 -- Name: obscore_instrument_name_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_instrument_name_idx ON vos.obscore USING btree (instrument_name);
 
 
 --
 -- Name: obscore_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_is_public_idx ON vos.obscore USING btree (is_public);
 
 
 --
 -- Name: obscore_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_obs_id_idx ON vos.obscore USING btree (obs_id);
 
 
 --
 -- Name: obscore_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_obs_pub_did_idx ON vos.obscore USING btree (obs_pub_did);
 
 
 --
 -- Name: obscore_product_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_product_type_idx ON vos.obscore USING btree (product_type);
 
 
 --
 -- Name: obscore_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_s_dec_idx ON vos.obscore USING btree (s_dec);
 
 
 --
 -- Name: obscore_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_s_ra_idx ON vos.obscore USING btree (s_ra);
 
 
 --
 -- Name: obscore_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_t_exptime_idx ON vos.obscore USING btree (t_exptime);
 
 
 --
 -- Name: obscore_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX obscore_t_min_idx ON vos.obscore USING btree (t_min);
 
 
 --
 -- Name: siav1_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
 --
-
 CREATE INDEX siav1_exptime_idx ON vos.siav1 USING btree (exptime);
 
 
 --
 -- Name: siav1_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_fileref_idx ON vos.siav1 USING btree (fileref);
 
 
 --
 -- Name: siav1_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_filter_idx ON vos.siav1 USING btree (filter);
 
 
 --
 -- Name: siav1_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_is_public_idx ON vos.siav1 USING btree (is_public);
 
 
 --
 -- Name: siav1_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_mjd_obs_idx ON vos.siav1 USING btree (mjd_obs);
 
 
 --
 -- Name: siav1_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_obs_id_idx ON vos.siav1 USING btree (obs_id);
 
 
 --
 -- Name: siav1_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_obs_pub_did_idx ON vos.siav1 USING btree (obs_pub_did);
 
 
 --
 -- Name: siav1_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_q3c_idx ON vos.siav1 USING btree (public.q3c_ang2ipix(s_ra, s_dec));
 
 ALTER TABLE vos.siav1 CLUSTER ON siav1_q3c_idx;
@@ -464,56 +432,48 @@ ALTER TABLE vos.siav1 CLUSTER ON siav1_q3c_idx;
 --
 -- Name: siav1_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_s_dec_idx ON vos.siav1 USING btree (s_dec);
 
 
 --
 -- Name: siav1_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_s_ra_idx ON vos.siav1 USING btree (s_ra);
 
 
 --
 -- Name: siav1_time_start_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav1_time_start_idx ON vos.siav1 USING btree (time_start);
 
 
 --
 -- Name: siav2_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_fileref_idx ON vos.siav2 USING btree (fileref);
 
 
 --
 -- Name: siav2_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_filter_idx ON vos.siav2 USING btree (filter);
 
 
 --
 -- Name: siav2_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_obs_id_idx ON vos.siav2 USING btree (obs_id);
 
 
 --
 -- Name: siav2_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_obs_pub_did_idx ON vos.siav2 USING btree (obs_pub_did);
 
 
 --
 -- Name: siav2_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_q3c_idx ON vos.siav2 USING btree (public.q3c_ang2ipix(spat_loc1, spat_loc2));
 
 ALTER TABLE vos.siav2 CLUSTER ON siav2_q3c_idx;
@@ -522,60 +482,25 @@ ALTER TABLE vos.siav2 CLUSTER ON siav2_q3c_idx;
 --
 -- Name: siav2_spat_loc1_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_spat_loc1_idx ON vos.siav2 USING btree (spat_loc1);
 
 
 --
 -- Name: siav2_spat_loc2_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_spat_loc2_idx ON vos.siav2 USING btree (spat_loc2);
 
 
 --
 -- Name: siav2_time_start_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-
 CREATE INDEX siav2_time_start_idx ON vos.siav2 USING btree (time_start);
 
 
 --
--- Name: SCHEMA vos; Type: ACL; Schema: -; Owner: astrolabe
+-- Set permissions to these tables for various users
 --
-
-GRANT USAGE ON SCHEMA vos TO alquery;
-
-
---
--- Name: TABLE exposure; Type: ACL; Schema: vos; Owner: astrolabe
---
-
-GRANT SELECT ON TABLE vos.exposure TO alquery;
-
-
---
--- Name: TABLE obscore; Type: ACL; Schema: vos; Owner: astrolabe
---
-
-GRANT SELECT ON TABLE vos.obscore TO alquery;
-
-
---
--- Name: TABLE siav1; Type: ACL; Schema: vos; Owner: astrolabe
---
-
-GRANT SELECT ON TABLE vos.siav1 TO alquery;
-
-
---
--- Name: TABLE siav2; Type: ACL; Schema: vos; Owner: astrolabe
---
-
-GRANT SELECT ON TABLE vos.siav2 TO alquery;
-
-
---
--- PostgreSQL database dump complete
---
-
+GRANT SELECT ON ALL TABLES IN SCHEMA vos TO alquery;
+GRANT SELECT ON ALL TABLES IN SCHEMA vos TO readonly;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vos TO readwrite;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA vos TO readwrite;
