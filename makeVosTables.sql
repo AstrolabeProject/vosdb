@@ -36,10 +36,10 @@ CREATE TABLE vos.exposure (
     access_url character varying(255),
     fileref character varying(160),
     path character varying(160),
-    obs_pub_did character varying(128),
+    obs_publisher_did character varying(128),
     obs_collection character varying(64),
     obs_id character varying(64),
-    product_type character varying(16),
+    dataproduct_type character varying(16),
     access_format character varying(64),
     raj2000_ character varying(32),
     decj2000_ character varying(32),
@@ -51,7 +51,6 @@ CREATE TABLE vos.exposure (
     obstype character varying(64),
     telescope character varying(64),
     plver character varying(60),
-    obsid character varying(64),
     object character varying(160),
     proposer character varying(160),
     propid character varying(32),
@@ -88,7 +87,7 @@ CREATE TABLE vos.obscore (
     pol_xel integer,
     access_url character varying(255),
     s_region character varying(255),
-    obs_pub_did character varying(128),
+    obs_publisher_did character varying(128),
     obs_collection character varying(64),
     obs_id character varying(64),
     access_format character varying(64),
@@ -97,7 +96,7 @@ CREATE TABLE vos.obscore (
     instrument_name character varying(64),
     o_ucd character varying(64),
     pol_states character varying(64),
-    product_type character varying(16),
+    dataproduct_type character varying(16),
     is_public integer
 );
 
@@ -149,7 +148,7 @@ CREATE TABLE vos.siav1 (
     magzero real,
     access_url character varying(255),
     object character varying(160),
-    obs_pub_did character varying(128),
+    obs_publisher_did character varying(128),
     title character varying(128),
     creator character varying(128),
     id character varying(128),
@@ -229,7 +228,7 @@ CREATE TABLE vos.siav2 (
     photflag integer,
     access_url character varying(255),
     pubdid character varying(160),
-    obs_pub_did character varying(128),
+    obs_publisher_did character varying(128),
     title character varying(128),
     creator character varying(128),
     collection character varying(128),
@@ -344,15 +343,15 @@ CREATE INDEX obscore_obs_id_idx ON vos.obscore USING btree (obs_id);
 
 
 --
--- Name: obscore_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: obscore_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX obscore_obs_pub_did_idx ON vos.obscore USING btree (obs_pub_did);
+CREATE INDEX obscore_obs_publisher_did_idx ON vos.obscore USING btree (obs_publisher_did);
 
 
 --
--- Name: obscore_product_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: obscore_dataproduct_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX obscore_product_type_idx ON vos.obscore USING btree (product_type);
+CREATE INDEX obscore_dataproduct_type_idx ON vos.obscore USING btree (dataproduct_type);
 
 
 --
@@ -416,9 +415,9 @@ CREATE INDEX siav1_obs_id_idx ON vos.siav1 USING btree (obs_id);
 
 
 --
--- Name: siav1_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: siav1_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_obs_pub_did_idx ON vos.siav1 USING btree (obs_pub_did);
+CREATE INDEX siav1_obs_publisher_did_idx ON vos.siav1 USING btree (obs_publisher_did);
 
 
 --
@@ -466,9 +465,9 @@ CREATE INDEX siav2_obs_id_idx ON vos.siav2 USING btree (obs_id);
 
 
 --
--- Name: siav2_obs_pub_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: siav2_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_obs_pub_did_idx ON vos.siav2 USING btree (obs_pub_did);
+CREATE INDEX siav2_obs_publisher_did_idx ON vos.siav2 USING btree (obs_publisher_did);
 
 
 --
