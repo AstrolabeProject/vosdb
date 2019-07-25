@@ -21,7 +21,7 @@ SET search_path TO vos, public;
 CREATE TABLE vos.exposure (
     ra_j2000 double precision,
     dec_j2000 double precision,
-    exptime real,
+    t_exptime double precision,
     zd real,
     airmass real,
     seeing real,
@@ -36,7 +36,7 @@ CREATE TABLE vos.exposure (
     access_url character varying(255),
     fileref character varying(160),
     path character varying(160),
-    obs_publisher_did character varying(128),
+    obs_publisher_did character varying(160),
     obs_collection character varying(64),
     obs_id character varying(64),
     dataproduct_type character varying(16),
@@ -53,7 +53,7 @@ CREATE TABLE vos.exposure (
     plver character varying(60),
     object character varying(160),
     proposer character varying(160),
-    propid character varying(32),
+    proposal_id character varying(32),
     ha character varying(20),
     instrument character varying(64),
     filter character varying(32),
@@ -71,9 +71,9 @@ CREATE TABLE vos.obscore (
     s_dec double precision,
     s_fov double precision,
     s_resolution double precision,
+    t_exptime double precision,
     t_min double precision,
     t_max double precision,
-    t_exptime double precision,
     t_resolution double precision,
     em_min double precision,
     em_max double precision,
@@ -87,7 +87,8 @@ CREATE TABLE vos.obscore (
     pol_xel integer,
     access_url character varying(255),
     s_region character varying(255),
-    obs_publisher_did character varying(128),
+    obs_publisher_did character varying(160),
+    obs_creator_name character varying(128),
     obs_collection character varying(64),
     obs_id character varying(64),
     access_format character varying(64),
@@ -125,10 +126,11 @@ CREATE TABLE vos.siav1 (
     spec_location double precision,
     em_min double precision,
     em_max double precision,
-    em_res double precision,
-    spec_respower double precision,
-    time_start double precision,
-    time_stop double precision,
+    em_res_power double precision,
+    em_resolution double precision,
+    t_exptime double precision,
+    t_min double precision,
+    t_max double precision,
     access_estsize integer,
     calib_level integer,
     datalength integer,
@@ -138,7 +140,6 @@ CREATE TABLE vos.siav1 (
     el_length integer,
     el_size integer,
     expnum integer,
-    exptime real,
     zd real,
     airmass real,
     seeing real,
@@ -148,13 +149,12 @@ CREATE TABLE vos.siav1 (
     magzero real,
     access_url character varying(255),
     object character varying(160),
-    obs_publisher_did character varying(128),
+    obs_publisher_did character varying(160),
     title character varying(128),
-    creator character varying(128),
-    id character varying(128),
+    obs_creator_name character varying(128),
     obs_collection character varying(64),
     project_code character varying(64),
-    propid character varying(64),
+    proposal_id character varying(64),
     obs_id character varying(64),
     assoc_id character varying(64),
     access_format character varying(64),
@@ -187,6 +187,8 @@ ALTER TABLE vos.siav1 OWNER TO astrolabe;
 -- Name: siav2; Type: TABLE; Schema: vos; Owner: astrolabe
 --
 CREATE TABLE vos.siav2 (
+    s_ra double precision,
+    s_dec double precision,
     spat_loc1 double precision,
     spat_loc2 double precision,
     spat_lolimit1 double precision,
@@ -206,12 +208,12 @@ CREATE TABLE vos.siav2 (
     pix_res1 double precision,
     pix_res2 double precision,
     spec_location double precision,
-    spec_start double precision,
-    spec_stop double precision,
-    spec_res double precision,
-    spec_respower double precision,
-    time_start double precision,
-    time_stop double precision,
+    em_min double precision,
+    em_max double precision,
+    em_res_power double precision,
+    em_resolution double precision,
+    t_min double precision,
+    t_max double precision,
     access_estsize integer,
     calib_level integer,
     datalength integer,
@@ -227,11 +229,9 @@ CREATE TABLE vos.siav2 (
     ccdnum integer,
     photflag integer,
     access_url character varying(255),
-    pubdid character varying(160),
-    obs_publisher_did character varying(128),
+    obs_publisher_did character varying(160),
     title character varying(128),
-    creator character varying(128),
-    collection character varying(128),
+    obs_creator_name character varying(128),
     fileref character varying(128),
     access_format character varying(64),
     obs_collection character varying(64),
@@ -269,9 +269,9 @@ CREATE INDEX exposure_dec_j2000_idx ON vos.exposure USING btree (dec_j2000);
 
 
 --
--- Name: exposure_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
+-- Name: exposure_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
 --
-CREATE INDEX exposure_exptime_idx ON vos.exposure USING btree (exptime);
+CREATE INDEX exposure_t_exptime_idx ON vos.exposure USING btree (t_exptime);
 
 
 --
@@ -379,9 +379,9 @@ CREATE INDEX obscore_t_min_idx ON vos.obscore USING btree (t_min);
 
 
 --
--- Name: siav1_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
+-- Name: siav1_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
 --
-CREATE INDEX siav1_exptime_idx ON vos.siav1 USING btree (exptime);
+CREATE INDEX siav1_t_exptime_idx ON vos.siav1 USING btree (t_exptime);
 
 
 --
@@ -441,9 +441,9 @@ CREATE INDEX siav1_s_ra_idx ON vos.siav1 USING btree (s_ra);
 
 
 --
--- Name: siav1_time_start_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: siav1_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_time_start_idx ON vos.siav1 USING btree (time_start);
+CREATE INDEX siav1_t_min_idx ON vos.siav1 USING btree (t_min);
 
 
 --
@@ -491,9 +491,9 @@ CREATE INDEX siav2_spat_loc2_idx ON vos.siav2 USING btree (spat_loc2);
 
 
 --
--- Name: siav2_time_start_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: siav2_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_time_start_idx ON vos.siav2 USING btree (time_start);
+CREATE INDEX siav2_t_min_idx ON vos.siav2 USING btree (t_min);
 
 
 --
