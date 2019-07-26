@@ -1,7 +1,7 @@
 --
 -- Make tables and indices for the VOS schema of the Ivoaal database.
 --   This script assumes that the database 'ivoaal', astro users, and the schema 'vos'
---   have all been created and that it is run in that DB and schema.
+--   have all been created and that this script is run within that DB and schema.
 --
 
 SET check_function_bodies = false;
@@ -11,8 +11,212 @@ SET lock_timeout = 0;
 SET row_security = off;
 SET standard_conforming_strings = on;
 SET statement_timeout = 0;
+SET timezone = 'UTC';
 
 SET search_path TO vos, public;
+
+
+--
+-- Name: obscore; Type: TABLE; Schema: vos; Owner: astrolabe
+--
+--    Legend: M=Mandatory, O=Optional (based on ObsCore v1.1), C=Custom
+--
+CREATE TABLE vos.obscore (
+    em_max double precision,                -- M. Spectral bandpass, upper limit
+    em_min double precision,                -- M. Spectral bandpass, lower limit
+    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
+    s_dec double precision,                 -- M. Center of field/image
+    s_fov double precision,                 -- M. Field Of View of observation
+    s_ra double precision,                  -- M. Center of field/image
+    s_resolution double precision,          -- M. Spatial resolution of signal
+    t_exptime double precision,             -- M. Total exposure time
+    t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
+    t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
+    t_resolution double precision,          -- M. Temporal resolution (FWHM)
+    access_estsize integer,                 -- M. Estimated dataset size in kB
+    calib_level integer,                    -- M. Dataset calibration level
+    em_xel integer,                         -- M. Number elements along the spectral axis
+    pol_xel integer,                        -- M. Number elements along the polarization axis
+    s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
+    s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
+    t_xel integer,                          -- M. Number elements along the time axis
+    access_url character varying(255),      -- M. URL to access dataset
+    s_region character varying(255),        -- M. Sky region covered by observation
+    obs_publisher_did character varying(160), -- M. ID for dataset given by publisher
+    target_name character varying(128),     -- M. Name of object of interest
+    access_format character varying(64),    -- M. MIME type (content format) of the dataset
+    facility_name character varying(64),    -- M. Name of facility that created the dataset
+    instrument_name character varying(64),  -- M. Name of the instrument that generated the data
+    o_ucd character varying(64),            -- M. UCD for observable
+    obs_collection character varying(64),   -- M. Data collection name
+    obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
+    pol_states character varying(64),       -- M. Polarization states represented in dataset
+    dataproduct_type character varying(16)  -- M. Primary dataset type (ObsCore 3.3.1)
+);
+
+ALTER TABLE vos.obscore OWNER TO astrolabe;
+
+
+--
+-- Name: jwst; Type: TABLE; Schema: vos; Owner: astrolabe
+--
+--    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
+--            C=Custom,    F=FITS (Standard 4, 8/13/2018)
+--
+CREATE TABLE vos.jwst (
+    em_max double precision,                -- M. Spectral bandpass, upper limit
+    em_min double precision,                -- M. Spectral bandpass, lower limit
+    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
+    equinox double precision,               -- F. Non-negative epoch of mean equator/equinox in years.
+    s_dec double precision,                 -- M. Center of field/image
+    s_fov double precision,                 -- M. Field Of View of observation
+    s_ra double precision,                  -- M. Center of field/image
+    s_resolution double precision,          -- M. Spatial resolution of signal
+    t_exptime double precision,             -- M. Total exposure time
+    t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
+    t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
+    t_resolution double precision,          -- M. Temporal resolution (FWHM)
+    access_estsize integer,                 -- M. Estimated dataset size in kB
+    calib_level integer,                    -- M. Dataset calibration level
+    em_xel integer,                         -- M. Number elements along the spectral axis
+    is_public integer                       -- C. Is this observation available to the public?
+    pol_xel integer,                        -- M. Number elements along the polarization axis
+    s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
+    s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
+    t_xel integer,                          -- M. Number elements along the time axis
+    obs_creation_date timestamp,            -- O. Dataset creation date in UTC
+    access_url character varying(255),      -- M. URL to access dataset
+    s_region character varying(255),        -- M. Sky region covered by observation
+    obs_publisher_did character varying(160), -- M. ID for dataset given by publisher
+    obs_creator_name character varying(128),  -- O. Name of entity that created the dataset
+    target_name character varying(128),     -- M. Name of object of interest
+    access_format character varying(64),    -- M. MIME type (content format) of the dataset
+    facility_name character varying(64),    -- M. Name of facility that created the dataset
+    instrument_name character varying(64),  -- M. Name of the instrument that generated the data
+    o_ucd character varying(64),            -- M. UCD for observable
+    obs_collection character varying(64),   -- M. Data collection name
+    obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
+    pol_states character varying(64),       -- M. Polarization states represented in dataset
+    dataproduct_type character varying(16), -- M. Primary dataset type (ObsCore 3.3.1)
+    radesys character varying(16)           -- F. Reference frame of coordinates (FITS: table 24)
+);
+
+ALTER TABLE vos.jwst OWNER TO astrolabe;
+
+
+--
+-- Name: siav1; Type: TABLE; Schema: vos; Owner: astrolabe
+--
+CREATE TABLE vos.siav1 (
+    spat_lolimit1 double precision,
+    spat_lolimit2 double precision,
+    spat_hilimit1 double precision,
+    spat_hilimit2 double precision,
+    ra1 double precision,
+    dec1 double precision,
+    ra2 double precision,
+    dec2 double precision,
+    ra3 double precision,
+    dec3 double precision,
+    ra4 double precision,
+    dec4 double precision,
+    im_scale double precision,
+    spec_location double precision,
+    datalength integer,
+    im_naxes integer,
+    im_naxis1 integer,
+    im_naxis2 integer,
+    el_length integer,
+    el_size integer,
+    expnum integer,
+    zd real,
+    airmass real,
+    seeing real,
+    moonangle real,
+    fwhm real,
+    elliptic real,
+    magzero real,
+    title character varying(128),
+    project_code character varying(64),
+    proposal_id character varying(64),
+    assoc_id character varying(64),
+    fluxaxis_ucd character varying(64),
+    fileref character varying(160),
+    proposer character varying(160),
+    date_obs character varying(32),
+    mjd_obs character varying(32),
+    filt_str character varying(64),
+    time_location character varying(60),
+    pixtype character varying(60),
+    wcsaxes1 character varying(60),
+    wcsaxes2 character varying(60),
+    fluxaxis_unit character varying(60),
+    proctype character varying(64),
+    prodtype character varying(64),
+    telescope character varying(64),
+    ha character varying(20),
+    filter character varying(32),
+    obs_bandpass character varying(32),     -- C.
+    is_public integer
+);
+
+ALTER TABLE vos.siav1 OWNER TO astrolabe;
+
+
+--
+-- Name: siav2; Type: TABLE; Schema: vos; Owner: astrolabe
+--
+CREATE TABLE vos.siav2 (
+    spat_loc1 double precision,
+    spat_loc2 double precision,
+    spat_lolimit1 double precision,
+    spat_lolimit2 double precision,
+    spat_hilimit1 double precision,
+    spat_hilimit2 double precision,
+    ra1 double precision,
+    dec1 double precision,
+    ra2 double precision,
+    dec2 double precision,
+    ra3 double precision,
+    dec3 double precision,
+    ra4 double precision,
+    dec4 double precision,
+    spat_res1 double precision,
+    spat_res2 double precision,
+    pix_res1 double precision,
+    pix_res2 double precision,
+    spec_location double precision,
+    datalength integer,
+    nsubarrays integer,
+    naxes integer,
+    naxis1 integer,
+    naxis2 integer,
+    el_naxes integer,
+    el_naxis1 integer,
+    el_naxis2 integer,
+    el_length integer,
+    el_size integer,
+    ccdnum integer,
+    photflag integer,
+    access_url character varying(255),
+    title character varying(128),
+    fileref character varying(128),
+    fluxaxis_ucd character varying(64),
+    proctype character varying(64),
+    prodtype character varying(64),
+    time_location character varying(60),
+    extname character varying(128),
+    el_pixtype character varying(60),
+    fluxaxis_unit character varying(60),
+    plver character varying(60),
+    pixtype character varying(60),
+    wcsaxes1 character varying(60),
+    wcsaxes2 character varying(60),
+    creationtype character varying(60),
+    filter character varying(32)
+);
+
+ALTER TABLE vos.siav2 OWNER TO astrolabe;
 
 
 --
@@ -57,201 +261,10 @@ CREATE TABLE vos.exposure (
     ha character varying(20),
     instrument character varying(64),
     filter character varying(32),
-    is_public integer
 );
 
 ALTER TABLE vos.exposure OWNER TO astrolabe;
 
-
---
--- Name: obscore; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.obscore (
-    s_ra double precision,
-    s_dec double precision,
-    s_fov double precision,
-    s_resolution double precision,
-    t_exptime double precision,
-    t_min double precision,
-    t_max double precision,
-    t_resolution double precision,
-    em_min double precision,
-    em_max double precision,
-    em_res_power double precision,
-    calib_level integer,
-    access_estsize integer,
-    s_xel1 integer,
-    s_xel2 integer,
-    t_xel integer,
-    em_xel integer,
-    pol_xel integer,
-    access_url character varying(255),
-    s_region character varying(255),
-    obs_publisher_did character varying(160),
-    obs_creator_name character varying(128),
-    obs_collection character varying(64),
-    obs_id character varying(64),
-    access_format character varying(64),
-    target_name character varying(128),
-    facility_name character varying(64),
-    instrument_name character varying(64),
-    o_ucd character varying(64),
-    pol_states character varying(64),
-    dataproduct_type character varying(16),
-    is_public integer
-);
-
-ALTER TABLE vos.obscore OWNER TO astrolabe;
-
-
---
--- Name: siav1; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.siav1 (
-    s_ra double precision,
-    s_dec double precision,
-    spat_lolimit1 double precision,
-    spat_lolimit2 double precision,
-    spat_hilimit1 double precision,
-    spat_hilimit2 double precision,
-    ra1 double precision,
-    dec1 double precision,
-    ra2 double precision,
-    dec2 double precision,
-    ra3 double precision,
-    dec3 double precision,
-    ra4 double precision,
-    dec4 double precision,
-    im_scale double precision,
-    spec_location double precision,
-    em_min double precision,
-    em_max double precision,
-    em_res_power double precision,
-    em_resolution double precision,
-    t_exptime double precision,
-    t_min double precision,
-    t_max double precision,
-    access_estsize integer,
-    calib_level integer,
-    datalength integer,
-    im_naxes integer,
-    im_naxis1 integer,
-    im_naxis2 integer,
-    el_length integer,
-    el_size integer,
-    expnum integer,
-    zd real,
-    airmass real,
-    seeing real,
-    moonangle real,
-    fwhm real,
-    elliptic real,
-    magzero real,
-    access_url character varying(255),
-    object character varying(160),
-    obs_publisher_did character varying(160),
-    title character varying(128),
-    obs_creator_name character varying(128),
-    obs_collection character varying(64),
-    project_code character varying(64),
-    proposal_id character varying(64),
-    obs_id character varying(64),
-    assoc_id character varying(64),
-    access_format character varying(64),
-    fluxaxis_ucd character varying(64),
-    fileref character varying(160),
-    proposer character varying(160),
-    date_obs character varying(32),
-    mjd_obs character varying(32),
-    filt_str character varying(64),
-    time_location character varying(60),
-    pixtype character varying(60),
-    wcsaxes1 character varying(60),
-    wcsaxes2 character varying(60),
-    fluxaxis_unit character varying(60),
-    proctype character varying(64),
-    prodtype character varying(64),
-    obstype character varying(64),
-    telescope character varying(64),
-    ha character varying(20),
-    instrument_name character varying(64),
-    filter character varying(32),
-    obs_bandpass character varying(32),
-    is_public integer
-);
-
-ALTER TABLE vos.siav1 OWNER TO astrolabe;
-
-
---
--- Name: siav2; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.siav2 (
-    s_ra double precision,
-    s_dec double precision,
-    spat_loc1 double precision,
-    spat_loc2 double precision,
-    spat_lolimit1 double precision,
-    spat_lolimit2 double precision,
-    spat_hilimit1 double precision,
-    spat_hilimit2 double precision,
-    ra1 double precision,
-    dec1 double precision,
-    ra2 double precision,
-    dec2 double precision,
-    ra3 double precision,
-    dec3 double precision,
-    ra4 double precision,
-    dec4 double precision,
-    spat_res1 double precision,
-    spat_res2 double precision,
-    pix_res1 double precision,
-    pix_res2 double precision,
-    spec_location double precision,
-    em_min double precision,
-    em_max double precision,
-    em_res_power double precision,
-    em_resolution double precision,
-    t_min double precision,
-    t_max double precision,
-    access_estsize integer,
-    calib_level integer,
-    datalength integer,
-    nsubarrays integer,
-    naxes integer,
-    naxis1 integer,
-    naxis2 integer,
-    el_naxes integer,
-    el_naxis1 integer,
-    el_naxis2 integer,
-    el_length integer,
-    el_size integer,
-    ccdnum integer,
-    photflag integer,
-    access_url character varying(255),
-    obs_publisher_did character varying(160),
-    title character varying(128),
-    obs_creator_name character varying(128),
-    fileref character varying(128),
-    access_format character varying(64),
-    obs_collection character varying(64),
-    obs_id character varying(64),
-    fluxaxis_ucd character varying(64),
-    proctype character varying(64),
-    prodtype character varying(64),
-    time_location character varying(60),
-    extname character varying(128),
-    el_pixtype character varying(60),
-    fluxaxis_unit character varying(60),
-    plver character varying(60),
-    pixtype character varying(60),
-    wcsaxes1 character varying(60),
-    wcsaxes2 character varying(60),
-    creationtype character varying(60),
-    filter character varying(32)
-);
-
-ALTER TABLE vos.siav2 OWNER TO astrolabe;
 
 
 --
