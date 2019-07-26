@@ -21,40 +21,40 @@ SET search_path TO vos, public;
 --
 --    Legend: M=Mandatory, O=Optional (based on ObsCore v1.1), C=Custom
 --
-CREATE TABLE vos.obscore (
-    em_max double precision,                -- M. Spectral bandpass, upper limit
-    em_min double precision,                -- M. Spectral bandpass, lower limit
-    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
-    s_dec double precision,                 -- M. Center of field/image
-    s_fov double precision,                 -- M. Field Of View of observation
-    s_ra double precision,                  -- M. Center of field/image
-    s_resolution double precision,          -- M. Spatial resolution of signal
-    t_exptime double precision,             -- M. Total exposure time
-    t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
-    t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
-    t_resolution double precision,          -- M. Temporal resolution (FWHM)
-    access_estsize integer,                 -- M. Estimated dataset size in kB
-    calib_level integer,                    -- M. Dataset calibration level
-    em_xel integer,                         -- M. Number elements along the spectral axis
-    pol_xel integer,                        -- M. Number elements along the polarization axis
-    s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
-    s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
-    t_xel integer,                          -- M. Number elements along the time axis
-    access_url character varying(255),      -- M. URL to access dataset
-    s_region character varying(255),        -- M. Sky region covered by observation
-    obs_publisher_did character varying(160), -- M. ID for dataset given by publisher
-    target_name character varying(128),     -- M. Name of object of interest
-    access_format character varying(64),    -- M. MIME type (content format) of the dataset
-    facility_name character varying(64),    -- M. Name of facility that created the dataset
-    instrument_name character varying(64),  -- M. Name of the instrument that generated the data
-    o_ucd character varying(64),            -- M. UCD for observable
-    obs_collection character varying(64),   -- M. Data collection name
-    obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
-    pol_states character varying(64),       -- M. Polarization states represented in dataset
-    dataproduct_type character varying(16)  -- M. Primary dataset type (ObsCore 3.3.1)
-);
+-- CREATE TABLE vos.obscore (
+--     em_max double precision,                -- M. Spectral bandpass, upper limit
+--     em_min double precision,                -- M. Spectral bandpass, lower limit
+--     em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
+--     s_dec double precision,                 -- M. Center of field/image
+--     s_fov double precision,                 -- M. Field Of View of observation
+--     s_ra double precision,                  -- M. Center of field/image
+--     s_resolution double precision,          -- M. Spatial resolution of signal
+--     t_exptime double precision,             -- M. Total exposure time
+--     t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
+--     t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
+--     t_resolution double precision,          -- M. Temporal resolution (FWHM)
+--     access_estsize integer,                 -- M. Estimated dataset size in kB
+--     calib_level integer,                    -- M. Dataset calibration level
+--     em_xel integer,                         -- M. Number elements along the spectral axis
+--     pol_xel integer,                        -- M. Number elements along the polarization axis
+--     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
+--     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
+--     t_xel integer,                          -- M. Number elements along the time axis
+--     access_url character varying(255),      -- M. URL to access dataset
+--     s_region character varying(255),        -- M. Sky region covered by observation
+--     obs_publisher_did character varying(160), -- M. ID for dataset given by publisher
+--     target_name character varying(128),     -- M. Name of object of interest
+--     access_format character varying(64),    -- M. MIME type (content format) of the dataset
+--     facility_name character varying(64),    -- M. Name of facility that created the dataset
+--     instrument_name character varying(64),  -- M. Name of the instrument that generated the data
+--     o_ucd character varying(64),            -- M. UCD for observable
+--     obs_collection character varying(64),   -- M. Data collection name
+--     obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
+--     pol_states character varying(64),       -- M. Polarization states represented in dataset
+--     dataproduct_type character varying(16)  -- M. Primary dataset type (ObsCore 3.3.1)
+-- );
 
-ALTER TABLE vos.obscore OWNER TO astrolabe;
+-- ALTER TABLE vos.obscore OWNER TO astrolabe;
 
 
 --
@@ -76,10 +76,22 @@ CREATE TABLE vos.jwst (
     t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
     t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
     t_resolution double precision,          -- M. Temporal resolution (FWHM)
+    spat_lolimit1 double precision,
+    spat_lolimit2 double precision,
+    spat_hilimit1 double precision,
+    spat_hilimit2 double precision,
+    ra1 double precision,
+    dec1 double precision,
+    ra2 double precision,
+    dec2 double precision,
+    ra3 double precision,
+    dec3 double precision,
+    ra4 double precision,
+    dec4 double precision,
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
     em_xel integer,                         -- M. Number elements along the spectral axis
-    is_public integer                       -- C. Is this observation available to the public?
+    is_public integer,                      -- C. Is this observation available to the public?
     pol_xel integer,                        -- M. Number elements along the polarization axis
     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
@@ -97,6 +109,7 @@ CREATE TABLE vos.jwst (
     obs_collection character varying(64),   -- M. Data collection name
     obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
     pol_states character varying(64),       -- M. Polarization states represented in dataset
+    obs_bandpass character varying(32),     -- C. Observed band
     dataproduct_type character varying(16), -- M. Primary dataset type (ObsCore 3.3.1)
     radesys character varying(16)           -- F. Reference frame of coordinates (FITS: table 24)
 );
@@ -105,408 +118,91 @@ ALTER TABLE vos.jwst OWNER TO astrolabe;
 
 
 --
--- Name: siav1; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.siav1 (
-    spat_lolimit1 double precision,
-    spat_lolimit2 double precision,
-    spat_hilimit1 double precision,
-    spat_hilimit2 double precision,
-    ra1 double precision,
-    dec1 double precision,
-    ra2 double precision,
-    dec2 double precision,
-    ra3 double precision,
-    dec3 double precision,
-    ra4 double precision,
-    dec4 double precision,
-    im_scale double precision,
-    spec_location double precision,
-    datalength integer,
-    im_naxes integer,
-    im_naxis1 integer,
-    im_naxis2 integer,
-    el_length integer,
-    el_size integer,
-    expnum integer,
-    zd real,
-    airmass real,
-    seeing real,
-    moonangle real,
-    fwhm real,
-    elliptic real,
-    magzero real,
-    title character varying(128),
-    project_code character varying(64),
-    proposal_id character varying(64),
-    assoc_id character varying(64),
-    fluxaxis_ucd character varying(64),
-    fileref character varying(160),
-    proposer character varying(160),
-    date_obs character varying(32),
-    mjd_obs character varying(32),
-    filt_str character varying(64),
-    time_location character varying(60),
-    pixtype character varying(60),
-    wcsaxes1 character varying(60),
-    wcsaxes2 character varying(60),
-    fluxaxis_unit character varying(60),
-    proctype character varying(64),
-    prodtype character varying(64),
-    telescope character varying(64),
-    ha character varying(20),
-    filter character varying(32),
-    obs_bandpass character varying(32),     -- C.
-    is_public integer
-);
-
-ALTER TABLE vos.siav1 OWNER TO astrolabe;
-
-
---
--- Name: siav2; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.siav2 (
-    spat_loc1 double precision,
-    spat_loc2 double precision,
-    spat_lolimit1 double precision,
-    spat_lolimit2 double precision,
-    spat_hilimit1 double precision,
-    spat_hilimit2 double precision,
-    ra1 double precision,
-    dec1 double precision,
-    ra2 double precision,
-    dec2 double precision,
-    ra3 double precision,
-    dec3 double precision,
-    ra4 double precision,
-    dec4 double precision,
-    spat_res1 double precision,
-    spat_res2 double precision,
-    pix_res1 double precision,
-    pix_res2 double precision,
-    spec_location double precision,
-    datalength integer,
-    nsubarrays integer,
-    naxes integer,
-    naxis1 integer,
-    naxis2 integer,
-    el_naxes integer,
-    el_naxis1 integer,
-    el_naxis2 integer,
-    el_length integer,
-    el_size integer,
-    ccdnum integer,
-    photflag integer,
-    access_url character varying(255),
-    title character varying(128),
-    fileref character varying(128),
-    fluxaxis_ucd character varying(64),
-    proctype character varying(64),
-    prodtype character varying(64),
-    time_location character varying(60),
-    extname character varying(128),
-    el_pixtype character varying(60),
-    fluxaxis_unit character varying(60),
-    plver character varying(60),
-    pixtype character varying(60),
-    wcsaxes1 character varying(60),
-    wcsaxes2 character varying(60),
-    creationtype character varying(60),
-    filter character varying(32)
-);
-
-ALTER TABLE vos.siav2 OWNER TO astrolabe;
-
-
---
--- Name: exposure; Type: TABLE; Schema: vos; Owner: astrolabe
---
-CREATE TABLE vos.exposure (
-    ra_j2000 double precision,
-    dec_j2000 double precision,
-    t_exptime double precision,
-    zd real,
-    airmass real,
-    seeing real,
-    moonangle real,
-    fwhm real,
-    elliptic real,
-    magzero real,
-    calib_level integer,
-    access_estsize integer,
-    expnum integer,
-    photflag integer,
-    access_url character varying(255),
-    fileref character varying(160),
-    path character varying(160),
-    obs_publisher_did character varying(160),
-    obs_collection character varying(64),
-    obs_id character varying(64),
-    dataproduct_type character varying(16),
-    access_format character varying(64),
-    raj2000_ character varying(32),
-    decj2000_ character varying(32),
-    date_obs character varying(32),
-    mjd_obs character varying(32),
-    filt_str character varying(64),
-    proctype character varying(64),
-    prodtype character varying(64),
-    obstype character varying(64),
-    telescope character varying(64),
-    plver character varying(60),
-    object character varying(160),
-    proposer character varying(160),
-    proposal_id character varying(32),
-    ha character varying(20),
-    instrument character varying(64),
-    filter character varying(32),
-);
-
-ALTER TABLE vos.exposure OWNER TO astrolabe;
-
-
-
---
--- Name: exp_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exp_q3c_idx ON vos.exposure USING btree (public.q3c_ang2ipix(ra_j2000, dec_j2000));
-
-ALTER TABLE vos.exposure CLUSTER ON exp_q3c_idx;
-
-
---
--- Name: exposure_dec_j2000_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_dec_j2000_idx ON vos.exposure USING btree (dec_j2000);
-
-
---
--- Name: exposure_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
---
-CREATE INDEX exposure_t_exptime_idx ON vos.exposure USING btree (t_exptime);
-
-
---
--- Name: exposure_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_fileref_idx ON vos.exposure USING btree (fileref);
-
-
---
--- Name: exposure_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_filter_idx ON vos.exposure USING btree (filter);
-
-
---
--- Name: exposure_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_is_public_idx ON vos.exposure USING btree (is_public);
-
-
---
--- Name: exposure_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_mjd_obs_idx ON vos.exposure USING btree (mjd_obs);
-
-
---
--- Name: exposure_proctype_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_proctype_idx ON vos.exposure USING btree (proctype);
-
-
---
--- Name: exposure_prodtype_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_prodtype_idx ON vos.exposure USING btree (prodtype);
-
-
---
--- Name: exposure_ra_j2000_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX exposure_ra_j2000_idx ON vos.exposure USING btree (ra_j2000);
-
-
---
--- Name: obs_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obs_q3c_idx ON vos.obscore USING btree (public.q3c_ang2ipix(s_ra, s_dec));
-
-ALTER TABLE vos.obscore CLUSTER ON obs_q3c_idx;
-
-
---
--- Name: obscore_instrument_name_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX obscore_instrument_name_idx ON vos.obscore USING btree (instrument_name);
+CREATE INDEX jwst_q3c_idx ON vos.jwst USING btree (public.q3c_ang2ipix(s_ra, s_dec));
 
+ALTER TABLE vos.jwst CLUSTER ON jwst_q3c_idx;
 
---
--- Name: obscore_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_is_public_idx ON vos.obscore USING btree (is_public);
-
-
---
--- Name: obscore_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_obs_id_idx ON vos.obscore USING btree (obs_id);
-
-
---
--- Name: obscore_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_obs_publisher_did_idx ON vos.obscore USING btree (obs_publisher_did);
-
-
---
--- Name: obscore_dataproduct_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_dataproduct_type_idx ON vos.obscore USING btree (dataproduct_type);
-
-
---
--- Name: obscore_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_s_dec_idx ON vos.obscore USING btree (s_dec);
-
-
---
--- Name: obscore_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_s_ra_idx ON vos.obscore USING btree (s_ra);
-
-
---
--- Name: obscore_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_t_exptime_idx ON vos.obscore USING btree (t_exptime);
-
-
---
--- Name: obscore_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX obscore_t_min_idx ON vos.obscore USING btree (t_min);
-
-
---
--- Name: siav1_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe; Tablespace: data1
---
-CREATE INDEX siav1_t_exptime_idx ON vos.siav1 USING btree (t_exptime);
-
-
---
--- Name: siav1_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX siav1_fileref_idx ON vos.siav1 USING btree (fileref);
-
-
---
--- Name: siav1_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX siav1_filter_idx ON vos.siav1 USING btree (filter);
 
-
---
--- Name: siav1_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX siav1_is_public_idx ON vos.siav1 USING btree (is_public);
-
-
---
--- Name: siav1_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX siav1_mjd_obs_idx ON vos.siav1 USING btree (mjd_obs);
-
-
 --
--- Name: siav1_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_instrument_name_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_obs_id_idx ON vos.siav1 USING btree (obs_id);
+CREATE INDEX jwst_instrument_name_idx ON vos.jwst USING btree (instrument_name);
 
 
 --
--- Name: siav1_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_obs_publisher_did_idx ON vos.siav1 USING btree (obs_publisher_did);
+CREATE INDEX jwst_is_public_idx ON vos.jwst USING btree (is_public);
 
 
 --
--- Name: siav1_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_q3c_idx ON vos.siav1 USING btree (public.q3c_ang2ipix(s_ra, s_dec));
+CREATE INDEX jwst_obs_id_idx ON vos.jwst USING btree (obs_id);
 
-ALTER TABLE vos.siav1 CLUSTER ON siav1_q3c_idx;
 
-
 --
--- Name: siav1_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_s_dec_idx ON vos.siav1 USING btree (s_dec);
+CREATE INDEX jwst_obs_publisher_did_idx ON vos.jwst USING btree (obs_publisher_did);
 
 
 --
--- Name: siav1_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_dataproduct_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_s_ra_idx ON vos.siav1 USING btree (s_ra);
+CREATE INDEX jwst_dataproduct_type_idx ON vos.jwst USING btree (dataproduct_type);
 
 
 --
--- Name: siav1_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav1_t_min_idx ON vos.siav1 USING btree (t_min);
+CREATE INDEX jwst_s_dec_idx ON vos.jwst USING btree (s_dec);
 
 
 --
--- Name: siav2_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_fileref_idx ON vos.siav2 USING btree (fileref);
+CREATE INDEX jwst_s_ra_idx ON vos.jwst USING btree (s_ra);
 
 
 --
--- Name: siav2_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_filter_idx ON vos.siav2 USING btree (filter);
+CREATE INDEX jwst_t_exptime_idx ON vos.jwst USING btree (t_exptime);
 
 
 --
--- Name: siav2_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_obs_id_idx ON vos.siav2 USING btree (obs_id);
+CREATE INDEX jwst_t_min_idx ON vos.jwst USING btree (t_min);
 
 
 --
--- Name: siav2_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_obs_publisher_did_idx ON vos.siav2 USING btree (obs_publisher_did);
-
+-- CREATE INDEX jwst_fileref_idx ON vos.jwst USING btree (fileref);
 
 --
--- Name: siav2_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_q3c_idx ON vos.siav2 USING btree (public.q3c_ang2ipix(spat_loc1, spat_loc2));
+-- CREATE INDEX jwst_filter_idx ON vos.jwst USING btree (filter);
 
-ALTER TABLE vos.siav2 CLUSTER ON siav2_q3c_idx;
-
-
 --
--- Name: siav2_spat_loc1_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_spat_loc1_idx ON vos.siav2 USING btree (spat_loc1);
+-- CREATE INDEX jwst_mjd_obs_idx ON vos.jwst USING btree (mjd_obs);
 
-
 --
--- Name: siav2_spat_loc2_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_spat_loc1_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_spat_loc2_idx ON vos.siav2 USING btree (spat_loc2);
-
+-- CREATE INDEX jwst_spat_loc1_idx ON vos.jwst USING btree (spat_loc1);
 
 --
--- Name: siav2_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_spat_loc2_idx; Type: INDEX; Schema: vos; Owner: astrolabe
 --
-CREATE INDEX siav2_t_min_idx ON vos.siav2 USING btree (t_min);
+-- CREATE INDEX jwst_spat_loc2_idx ON vos.jwst USING btree (spat_loc2);
 
 
 --
