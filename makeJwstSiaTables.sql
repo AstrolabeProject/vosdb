@@ -1,6 +1,6 @@
 --
--- Make tables and indices for the VOS schema of the Ivoaal database.
---   This script assumes that the database 'ivoaal', astro users, and the schema 'vos'
+-- Make tables and indices for the SIA schema of the VOS database.
+--   This script assumes that the database 'vos', astro users, and the schema 'sia'
 --   have all been created and that this script is run within that DB and schema.
 --
 
@@ -13,15 +13,15 @@ SET standard_conforming_strings = on;
 SET statement_timeout = 0;
 SET timezone = 'UTC';
 
-SET search_path TO vos, public;
+SET search_path TO sia, public;
 
 
 --
--- Name: obscore; Type: TABLE; Schema: vos; Owner: astrolabe
+-- Name: obscore; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (based on ObsCore v1.1), C=Custom
 --
--- CREATE TABLE vos.obscore (
+-- CREATE TABLE sia.obscore (
 --     em_max double precision,                -- M. Spectral bandpass, upper limit
 --     em_min double precision,                -- M. Spectral bandpass, lower limit
 --     em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
@@ -54,16 +54,16 @@ SET search_path TO vos, public;
 --     dataproduct_type character varying(16)  -- M. Primary dataset type (ObsCore 3.3.1)
 -- );
 
--- ALTER TABLE vos.obscore OWNER TO astrolabe;
+-- ALTER TABLE sia.obscore OWNER TO astrolabe;
 
 
 --
--- Name: jwst; Type: TABLE; Schema: vos; Owner: astrolabe
+-- Name: jwst; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
 --            C=Custom,    F=FITS (Standard 4, 8/13/2018), J=JWST-specific
 --
-CREATE TABLE vos.jwst (
+CREATE TABLE sia.jwst (
     em_max double precision,                -- M. Spectral bandpass, upper limit
     em_min double precision,                -- M. Spectral bandpass, lower limit
     em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
@@ -119,101 +119,101 @@ CREATE TABLE vos.jwst (
     nircam_module character varying(4)      -- J. NIRCam module: A or B
 );
 
-ALTER TABLE vos.jwst OWNER TO astrolabe;
+ALTER TABLE sia.jwst OWNER TO astrolabe;
 
 
 --
--- Name: jwst_q3c_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_q3c_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_q3c_idx ON vos.jwst USING btree (public.q3c_ang2ipix(s_ra, s_dec));
+CREATE INDEX jwst_q3c_idx ON sia.jwst USING btree (public.q3c_ang2ipix(s_ra, s_dec));
 
-ALTER TABLE vos.jwst CLUSTER ON jwst_q3c_idx;
-
-
---
--- Name: jwst_instrument_name_idx; Type: INDEX; Schema: vos; Owner: astrolabe
---
-CREATE INDEX jwst_instrument_name_idx ON vos.jwst USING btree (instrument_name);
+ALTER TABLE sia.jwst CLUSTER ON jwst_q3c_idx;
 
 
 --
--- Name: jwst_is_public_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_instrument_name_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_is_public_idx ON vos.jwst USING btree (is_public);
+CREATE INDEX jwst_instrument_name_idx ON sia.jwst USING btree (instrument_name);
 
 
 --
--- Name: jwst_obs_id_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_is_public_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_obs_id_idx ON vos.jwst USING btree (obs_id);
+CREATE INDEX jwst_is_public_idx ON sia.jwst USING btree (is_public);
 
 
 --
--- Name: jwst_obs_publisher_did_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_obs_id_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_obs_publisher_did_idx ON vos.jwst USING btree (obs_publisher_did);
+CREATE INDEX jwst_obs_id_idx ON sia.jwst USING btree (obs_id);
 
 
 --
--- Name: jwst_dataproduct_type_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_obs_publisher_did_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_dataproduct_type_idx ON vos.jwst USING btree (dataproduct_type);
+CREATE INDEX jwst_obs_publisher_did_idx ON sia.jwst USING btree (obs_publisher_did);
 
 
 --
--- Name: jwst_s_dec_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_dataproduct_type_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_s_dec_idx ON vos.jwst USING btree (s_dec);
+CREATE INDEX jwst_dataproduct_type_idx ON sia.jwst USING btree (dataproduct_type);
 
 
 --
--- Name: jwst_s_ra_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_s_dec_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_s_ra_idx ON vos.jwst USING btree (s_ra);
+CREATE INDEX jwst_s_dec_idx ON sia.jwst USING btree (s_dec);
 
 
 --
--- Name: jwst_t_exptime_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_s_ra_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_t_exptime_idx ON vos.jwst USING btree (t_exptime);
+CREATE INDEX jwst_s_ra_idx ON sia.jwst USING btree (s_ra);
 
 
 --
--- Name: jwst_t_min_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_t_exptime_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_t_min_idx ON vos.jwst USING btree (t_min);
+CREATE INDEX jwst_t_exptime_idx ON sia.jwst USING btree (t_exptime);
 
 
 --
--- Name: jwst_fileref_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_t_min_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_fileref_idx ON vos.jwst USING btree (fileref);
+CREATE INDEX jwst_t_min_idx ON sia.jwst USING btree (t_min);
+
 
 --
--- Name: jwst_filter_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_fileref_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_filter_idx ON vos.jwst USING btree (filter);
+-- CREATE INDEX jwst_fileref_idx ON sia.jwst USING btree (fileref);
 
 --
--- Name: jwst_mjd_obs_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_filter_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_mjd_obs_idx ON vos.jwst USING btree (mjd_obs);
+-- CREATE INDEX jwst_filter_idx ON sia.jwst USING btree (filter);
 
 --
--- Name: jwst_spat_loc1_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_mjd_obs_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_spat_loc1_idx ON vos.jwst USING btree (spat_loc1);
+-- CREATE INDEX jwst_mjd_obs_idx ON sia.jwst USING btree (mjd_obs);
 
 --
--- Name: jwst_spat_loc2_idx; Type: INDEX; Schema: vos; Owner: astrolabe
+-- Name: jwst_spat_loc1_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_spat_loc2_idx ON vos.jwst USING btree (spat_loc2);
+-- CREATE INDEX jwst_spat_loc1_idx ON sia.jwst USING btree (spat_loc1);
+
+--
+-- Name: jwst_spat_loc2_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+-- CREATE INDEX jwst_spat_loc2_idx ON sia.jwst USING btree (spat_loc2);
 
 
 --
 -- Set permissions to these tables for various users
 --
-GRANT SELECT ON ALL TABLES IN SCHEMA vos TO alquery;
-GRANT SELECT ON ALL TABLES IN SCHEMA vos TO readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vos TO readwrite;
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA vos TO readwrite;
+GRANT SELECT ON ALL TABLES IN SCHEMA sia TO alquery;
+GRANT SELECT ON ALL TABLES IN SCHEMA sia TO readonly;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA sia TO readwrite;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA sia TO readwrite;
