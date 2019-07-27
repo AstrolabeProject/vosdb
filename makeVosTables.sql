@@ -61,7 +61,7 @@ SET search_path TO vos, public;
 -- Name: jwst; Type: TABLE; Schema: vos; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
---            C=Custom,    F=FITS (Standard 4, 8/13/2018)
+--            C=Custom,    F=FITS (Standard 4, 8/13/2018), J=JWST-specific
 --
 CREATE TABLE vos.jwst (
     em_max double precision,                -- M. Spectral bandpass, upper limit
@@ -111,7 +111,12 @@ CREATE TABLE vos.jwst (
     pol_states character varying(64),       -- M. Polarization states represented in dataset
     obs_bandpass character varying(32),     -- C. Observed band
     dataproduct_type character varying(16), -- M. Primary dataset type (ObsCore 3.3.1)
-    radesys character varying(16)           -- F. Reference frame of coordinates (FITS: table 24)
+    radesys character varying(16),          -- F. Reference frame of coordinates (FITS: table 24)
+    filter character varying(16),           -- J. Name of filter element used
+    pupil character varying(16),            -- J. Name of pupil element used
+    read_pattern character varying(16),     -- J. Detector read-out pattern
+    nircam_channel character varying(8),    -- J. NIRCam channel: short or long
+    nircam_module character varying(4)      -- J. NIRCam module: A or B
 );
 
 ALTER TABLE vos.jwst OWNER TO astrolabe;
