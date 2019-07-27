@@ -7,5 +7,5 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts/
-COPY ./makeIvoaalDB.sql ./makeVosSchema.sql ./makeVosTables.sql /sql/
-COPY ./makeDB.sh /docker-entrypoint-initdb.d/
+COPY ./makeVosDB.sql ./makeJwstSiaSchema.sql ./makeJwstSiaTables.sql /sql/
+COPY ./makeVosDB.sh /docker-entrypoint-initdb.d/

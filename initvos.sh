@@ -14,9 +14,9 @@
 #  SIA schema entirely. Initialization must be run at least once since we don't
 #  check that the schema already exists before loading tables.
 #
-#    --load    Load all exposure/obscore/siav1/siav2 tables
+#    --load    Load all JWST SIA tables
 #
-#  Loads the four SIA tables:  exposure, obscore, siav1 and siav2.
+#  Loads the JWST SIA table:  sia.jwst
 #
 #    --append  Use of this flag on an existing schema will append rows to the
 #              SIA tables from the corresponding files in the given data directory.
@@ -36,7 +36,7 @@ Usage () {
     echo "    -l, --load             - load (or reload) the SIA tables"
     echo "    -n, --noop             - show what would be run without executing it"
     echo "    -q, --quser <name>     - the username of the user to query with (default: alquery)"
-    echo "    -s, --schema <name>    - the name of the schema to work on (default: vos)"
+    echo "    -s, --schema <name>    - the name of the schema to work on (default: sia)"
     echo "    -v, --verbose          - provide more information during run"
     echo "        --debug            - show additional debugging information"
     echo ""
@@ -51,7 +51,7 @@ fi
 # use or initialize standard PostgreSQL environment variables:
 #
 export PGDATA=${PGDATA:-/var/lib/postgresql/data}
-export PGDATABASE=${PGDATABASE:-ivoaal}
+export PGDATABASE=${PGDATABASE:-vos}
 export PGHOST=${PGHOST:-localhost}
 export PGPASSFILE=${PGPASSFILE:-/.pgpass}
 export PGPORT=${PGPORT:-54320}              # NOTE: remapped for Docker based PostgreSQL
@@ -61,7 +61,7 @@ export PGUSER=${PGUSER:-astrolabe}
 #
 DATA_DIR=${DATA_DIR:-/data}
 QUERY_USER=${QUERY_USER:-alquery}
-SCHEMA_NAME=${SCHEMA_NAME:-vos}
+SCHEMA_NAME=${SCHEMA_NAME:-sia}
 
 
 # variables corresponding to possible script arguments:
@@ -97,7 +97,7 @@ while [ $# -gt 0 ]; do
                         QUERY_USER=${1:-alquery}
                         ;;
         "-s"|"--schema") shift
-                         SCHEMA_NAME=${1:-vos}
+                         SCHEMA_NAME=${1:-sia}
                          ;;
         "-v"|"--verbose") VERBOSE=1
                           ;;
@@ -124,7 +124,7 @@ if [ $DEBUG -eq 1 ]; then
     echo "  PGPORT      = $PGPORT"
     echo "  PGUSER      = $PGUSER"
     echo ""
-    echo "VOS Environment Variables:"
+    echo "VOS DB Environment Variables:"
     echo "  DATA_DIR = $DATA_DIR"
     echo "  QUERY_USER  = $QUERY_USER"
     echo "  SCHEMA_NAME = $SCHEMA_NAME"
@@ -173,7 +173,7 @@ if [ ! -d "$DATA_DIR" -o ! -r "$DATA_DIR" ]; then
     exit 20
 fi
 
-# export/rexport VOS environment variables after checks:
+# export/rexport VOS DB environment variables after checks:
 #
 export DATA_DIR
 export QUERY_USER

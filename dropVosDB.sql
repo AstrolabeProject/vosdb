@@ -1,8 +1,8 @@
 --
--- Drop the Ivoaal users and database.
+-- Drop the VOS users and database.
 --
-REVOKE ALL privileges ON DATABASE ivoaal FROM alquery;
-REVOKE ALL privileges ON DATABASE ivoaal FROM astrolabe;
+REVOKE ALL privileges ON DATABASE vos FROM alquery;
+REVOKE ALL privileges ON DATABASE vos FROM astrolabe;
 DROP USER astrolabe;
 DROP USER alquery;
-DROP DATABASE ivoaal;
+DROP DATABASE vos;
