@@ -64,9 +64,6 @@ SET search_path TO sia, public;
 --            C=Custom,    F=FITS (Standard 4, 8/13/2018), J=JWST-specific
 --
 CREATE TABLE sia.jwst (
-    em_max double precision,                -- M. Spectral bandpass, upper limit
-    em_min double precision,                -- M. Spectral bandpass, lower limit
-    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
     equinox double precision,               -- F. Non-negative epoch of mean equator/equinox in years.
     s_dec double precision,                 -- M. Center of field/image
     s_fov double precision,                 -- M. Field Of View of observation
@@ -88,6 +85,9 @@ CREATE TABLE sia.jwst (
     dec3 double precision,
     ra4 double precision,
     dec4 double precision,
+    em_max double precision,                -- M. Spectral bandpass, upper limit
+    em_min double precision,                -- M. Spectral bandpass, lower limit
+    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
     em_xel integer,                         -- M. Number elements along the spectral axis
@@ -96,6 +96,7 @@ CREATE TABLE sia.jwst (
     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
     t_xel integer,                          -- M. Number elements along the time axis
+    gmt_date timestamp,                     -- J. FITS timestamp in GMT
     obs_creation_date timestamp,            -- O. Dataset creation date in UTC
     access_url character varying(255),      -- M. URL to access dataset
     s_region character varying(255),        -- M. Sky region covered by observation
