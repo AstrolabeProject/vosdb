@@ -61,7 +61,7 @@ SET search_path TO sia, public;
 -- Name: jwst; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
---            C=Custom,    F=FITS (Standard 4, 8/13/2018), J=JWST-specific
+--            C=Custom,  D=DALserver-specific,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
 --
 CREATE TABLE sia.jwst (
     equinox double precision,               -- F. Non-negative epoch of mean equator/equinox in years.
@@ -73,10 +73,10 @@ CREATE TABLE sia.jwst (
     t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
     t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
     t_resolution double precision,          -- M. Temporal resolution (FWHM)
-    spat_lolimit1 double precision,
-    spat_lolimit2 double precision,
-    spat_hilimit1 double precision,
-    spat_hilimit2 double precision,
+    spat_lolimit1 double precision,         -- D. Min value of spatial limit along RA axis
+    spat_hilimit1 double precision,         -- D. Max value of spatial limit along RA axis
+    spat_lolimit2 double precision,         -- D. Min value of spatial limit along DEC axis
+    spat_hilimit2 double precision,         -- D. Max value of spatial limit along DEC axis
     ra1 double precision,
     dec1 double precision,
     ra2 double precision,
@@ -85,14 +85,9 @@ CREATE TABLE sia.jwst (
     dec3 double precision,
     ra4 double precision,
     dec4 double precision,
-    em_max double precision,                -- M. Spectral bandpass, upper limit
-    em_min double precision,                -- M. Spectral bandpass, lower limit
-    em_res_power double precision,          -- M. Resolving power, spectral axis (characteristic)
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
-    em_xel integer,                         -- M. Number elements along the spectral axis
     is_public integer,                      -- C. Is this observation available to the public?
-    pol_xel integer,                        -- M. Number elements along the polarization axis
     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
     t_xel integer,                          -- M. Number elements along the time axis
@@ -109,13 +104,11 @@ CREATE TABLE sia.jwst (
     o_ucd character varying(64),            -- M. UCD for observable
     obs_collection character varying(64),   -- M. Data collection name
     obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
-    pol_states character varying(64),       -- M. Polarization states represented in dataset
     obs_bandpass character varying(32),     -- C. Observed band
     dataproduct_type character varying(16), -- M. Primary dataset type (ObsCore 3.3.1)
     radesys character varying(16),          -- F. Reference frame of coordinates (FITS: table 24)
     filter character varying(16),           -- J. Name of filter element used
     pupil character varying(16),            -- J. Name of pupil element used
-    read_pattern character varying(16),     -- J. Detector read-out pattern
     nircam_channel character varying(8),    -- J. NIRCam channel: short or long
     nircam_module character varying(4)      -- J. NIRCam module: A or B
 );
