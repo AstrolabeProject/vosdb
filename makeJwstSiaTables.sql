@@ -77,16 +77,21 @@ CREATE TABLE sia.jwst (
     spat_hilimit1 double precision,         -- D. Max value of spatial limit along RA axis
     spat_lolimit2 double precision,         -- D. Min value of spatial limit along DEC axis
     spat_hilimit2 double precision,         -- D. Max value of spatial limit along DEC axis
-    ra1 double precision,
-    dec1 double precision,
-    ra2 double precision,
-    dec2 double precision,
-    ra3 double precision,
-    dec3 double precision,
-    ra4 double precision,
-    dec4 double precision,
+    im_scale double precision,              -- D. Scale of the image
+    im_ra1 double precision,                -- D. RA  of lower left corner of image
+    im_dec1 double precision,               -- D. DEC of lower left corner of image
+    im_ra2 double precision,                -- D. RA  of upper left corner of image
+    im_dec2 double precision,               -- D. DEC of upper left corner of image
+    im_ra3 double precision,                -- D. RA  of upper right corner of image
+    im_dec3 double precision,               -- D. DEC of upper right corner of image
+    im_ra4 double precision,                -- D. RA  of lower right corner of image
+    im_dec4 double precision,               -- D. DEC of lower right corner of image
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
+    im_naxes integer,                       -- D. Number of physical image axes
+    im_naxis1 integer,                      -- D. Size of primary axis
+    im_naxis2 integer,                      -- D. Size of secondary axis
+    im_nsubarrays integer,                  -- D. Number of subarrays in image
     is_public integer,                      -- C. Is this observation available to the public?
     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
@@ -106,9 +111,12 @@ CREATE TABLE sia.jwst (
     obs_id character varying(64),           -- M. Internal ID given by the ObsTAP service
     obs_bandpass character varying(32),     -- C. Observed band
     dataproduct_type character varying(16), -- M. Primary dataset type (ObsCore 3.3.1)
-    radesys character varying(16),          -- F. Reference frame of coordinates (FITS: table 24)
     filter character varying(16),           -- J. Name of filter element used
+    im_pixtype character varying(16),       -- D. Pixel datatype specified as a VOTable type
+    im_wcsaxes1 character varying(16),      -- D. WCS axis type of primary axis (e.g. 'RA---TAN')
+    im_wcsaxes2 character varying(16),      -- D. WCS axis type of secondary axis (e.g. 'DEC--TAN')
     pupil character varying(16),            -- J. Name of pupil element used
+    radesys character varying(16),          -- F. Reference frame of coordinates (FITS: table 24)
     nircam_channel character varying(8),    -- J. NIRCam channel: short or long
     nircam_module character varying(4)      -- J. NIRCam module: A or B
 );
