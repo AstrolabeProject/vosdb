@@ -64,6 +64,7 @@ SET search_path TO sia, public;
 --            C=Custom,  D=DALserver-specific,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
 --
 CREATE TABLE sia.jwst (
+    id serial primary key,                  -- D. Auto-incrementing primary key
     equinox double precision,               -- F. Non-negative epoch of mean equator/equinox in years.
     s_dec double precision,                 -- M. Center of field/image
     s_fov double precision,                 -- M. Field Of View of observation
