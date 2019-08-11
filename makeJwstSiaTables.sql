@@ -73,7 +73,7 @@ CREATE TABLE sia.jwst (
     t_exptime double precision,             -- M. Total exposure time
     t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
     t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
-    t_resolution double precision,          -- M. Temporal resolution (FWHM)
+--    t_resolution double precision,          -- M. Temporal resolution (FWHM)
     spat_lolimit1 double precision,         -- D. Min value of spatial limit along RA axis
     spat_hilimit1 double precision,         -- D. Max value of spatial limit along RA axis
     spat_lolimit2 double precision,         -- D. Min value of spatial limit along DEC axis
@@ -90,13 +90,13 @@ CREATE TABLE sia.jwst (
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
     im_naxes integer,                       -- D. Number of physical image axes
-    im_naxis1 integer,                      -- D. Size of primary axis
-    im_naxis2 integer,                      -- D. Size of secondary axis
+    im_naxis1 integer,                      -- D. Size of primary axis (same as s_xel1)
+    im_naxis2 integer,                      -- D. Size of secondary axis (same as s_xel2)
     im_nsubarrays integer,                  -- D. Number of subarrays in image
     is_public integer,                      -- C. Is this observation available to the public?
     s_xel1 integer,                         -- M. Number elements along 1st coord of spatial axis
     s_xel2 integer,                         -- M. Number elements along 2nd coord of spatial axis
-    t_xel integer,                          -- M. Number elements along the time axis
+--    t_xel integer,                          -- M. Number elements along the time axis
     gmt_date timestamp,                     -- J. FITS timestamp in GMT
     obs_creation_date timestamp,            -- O. Dataset creation date in UTC
     access_url character varying(255),      -- M. URL to access dataset
