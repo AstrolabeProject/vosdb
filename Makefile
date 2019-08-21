@@ -26,8 +26,7 @@ watch:
 	docker logs -f vosi
 
 reset:
-	docker stop vosi
-	docker rm vosi
+	docker rm -f vosi
 	# docker volume prune --force
 
 destroy:
