@@ -11,5 +11,3 @@ ALTER SCHEMA tap_schema OWNER TO astrolabe;
 GRANT USAGE ON SCHEMA tap_schema TO tapuser;
 GRANT USAGE ON SCHEMA tap_schema TO readonly;
 GRANT USAGE, CREATE ON SCHEMA tap_schema TO readwrite;
-
-SET search_path TO tap_schema, sia, public;

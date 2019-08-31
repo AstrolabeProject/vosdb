@@ -1,5 +1,5 @@
 --
--- Make tables and indices for the SIA schema of the VOS database.
+-- Make image tables and indices for the SIA schema of the VOS database.
 --   This script assumes that the database 'vos', astro users, and the schema 'sia'
 --   have all been created and that this script is run within that DB and schema.
 --

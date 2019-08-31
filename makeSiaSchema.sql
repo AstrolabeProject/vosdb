@@ -20,5 +20,3 @@ GRANT USAGE, CREATE ON SCHEMA sia TO readwrite;
 -- NB: Extensions can only be created by a user with the Superuser attribute.
 --
 CREATE EXTENSION IF NOT EXISTS q3c SCHEMA public;
-
-SET search_path TO sia, public;
