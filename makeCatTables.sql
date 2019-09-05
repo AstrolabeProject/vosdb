@@ -20,7 +20,7 @@ SET search_path TO sia, public;
 -- Name: jcat; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 CREATE TABLE sia.jcat (
-    id integer primary key,
+    s_id integer primary key,
     s_ra double precision,
     s_dec double precision,
     redshift double precision,
