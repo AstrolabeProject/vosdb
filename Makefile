@@ -5,10 +5,10 @@ clean:
 	echo "Nothing to clean yet"
 
 build:
-	docker build -t vos-init .
+	docker build -t vosdb .
 
 run:
-	docker run -d --name vosdb -p5432:5432 -v $(PWD)/pgdata:/var/lib/postgresql/data vos-init
+	docker run -d --name vosdb -p5432:5432 -v $(PWD)/pgdata:/var/lib/postgresql/data vosdb
 
 exec:
 	docker exec -it vosdb /bin/bash
