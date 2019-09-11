@@ -8,10 +8,10 @@ build:
 	docker build -t vos-init .
 
 run:
-	docker run -d --name vosi -p54320:5432 -v $(PWD)/pgdata:/var/lib/postgresql/data vos-init
+	docker run -d --name vosdb -p5432:5432 -v $(PWD)/pgdata:/var/lib/postgresql/data vos-init
 
 exec:
-	docker exec -it vosi /bin/bash
+	docker exec -it vosdb /bin/bash
 
 init:
 	echo "Nothing to init yet"
@@ -23,10 +23,10 @@ append:
 	echo "Nothing to append yet"
 
 watch:
-	docker logs -f vosi
+	docker logs -f vosdb
 
 reset:
-	docker rm -f vosi
+	docker rm -f vosdb
 	# docker volume prune --force
 
 destroy:

@@ -54,7 +54,7 @@ export PGDATA=${PGDATA:-/var/lib/postgresql/data}
 export PGDATABASE=${PGDATABASE:-vos}
 export PGHOST=${PGHOST:-localhost}
 export PGPASSFILE=${PGPASSFILE:-/.pgpass}
-export PGPORT=${PGPORT:-54320}              # NOTE: remapped for Docker based PostgreSQL
+export PGPORT=${PGPORT:-5432}              # NOTE: remapped for Docker based PostgreSQL
 export PGUSER=${PGUSER:-astrolabe}
 
 # use or initialize some variables of our own:
