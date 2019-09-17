@@ -1,8 +1,5 @@
 help:
-	@echo "Make what? Try: clean, docker, run, exec, watch, reset"
-
-clean:
-	echo "Nothing to clean yet"
+	@echo "Make what? Try: docker, run, exec, watch, stop"
 
 docker:
 	docker build -t vosdb .
@@ -16,7 +13,7 @@ exec:
 watch:
 	docker logs -f vosdb
 
-reset:
+stop:
 	docker stop vosdb
 	-docker rm vosdb
 
