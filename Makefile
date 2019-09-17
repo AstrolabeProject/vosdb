@@ -1,37 +1,24 @@
 help:
-	@echo "Make what? Try: clean, build, run, exec, init, load, append, watch, reset, destroy"
+	@echo "Make what? Try: clean, docker, run, exec, watch, reset"
 
 clean:
 	echo "Nothing to clean yet"
 
-build:
+docker:
 	docker build -t vosdb .
 
 run:
-	docker run -d --name vosdb -p5432:5432 -v $(PWD)/pgdata:/var/lib/postgresql/data vosdb
+	docker run -d --name vosdb -p5432:5432 -v pgdata:/var/lib/postgresql/data vosdb
 
 exec:
 	docker exec -it vosdb /bin/bash
-
-init:
-	echo "Nothing to init yet"
-
-load:
-	echo "Nothing to load yet"
-
-append:
-	echo "Nothing to append yet"
 
 watch:
 	docker logs -f vosdb
 
 reset:
-	docker rm -f vosdb
-	# docker volume prune --force
-
-destroy:
-	rm -rf pgdata
-	mkdir pgdata
+	docker stop vosdb
+	-docker rm vosdb
 
 %:
 	@:
