@@ -5,7 +5,7 @@ docker:
 	docker build -t vosdb .
 
 run:
-	docker run -d --name vosdb -p5432:5432 -v pgdata:/var/lib/postgresql/data vosdb
+	docker run -d --name vosdb -p5432:5432 -v vos_pgdata:/var/lib/postgresql/data vosdb
 
 exec:
 	docker exec -it vosdb /bin/bash
