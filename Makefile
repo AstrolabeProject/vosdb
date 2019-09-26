@@ -1,21 +1,29 @@
+IMG=vosdb
+JOPTS=-Xms512m -Xmx8092m
+NAME=vosdb
+VOL=vos_pgdata
+PORT=5432
+
+.PHONY: help docker exec run stop watch
+
 help:
-	@echo "Make what? Try: docker, run, exec, watch, stop"
+	@echo "Make what? Try: docker, exec, run, stop, watch"
 
 docker:
-	docker build -t vosdb .
-
-run:
-	docker run -d --name vosdb -p5432:5432 -v vos_pgdata:/var/lib/postgresql/data vosdb
+	docker build -t ${IMG} .
 
 exec:
-	docker exec -it vosdb /bin/bash
+	docker exec -it ${NAME} bash
 
-watch:
-	docker logs -f vosdb
+run:
+	docker run -d --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:
-	docker stop vosdb
-	-docker rm vosdb
+	docker stop ${NAME}
+	-docker rm ${NAME}
+
+watch:
+	docker logs -f ${NAME}
 
 %:
 	@:
