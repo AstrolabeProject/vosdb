@@ -1,3 +1,4 @@
+ENVLOC=/etc/trhenv
 IMG=vosdb
 JOPTS=-Xms512m -Xmx8092m
 NAME=vosdb
@@ -8,11 +9,18 @@ PORT=5432
 
 help:
 	@echo "Make what? Try: docker, exec, run, stop, watch"
+	@echo '    where: help    - show this help message'
+	@echo '           docker  - build a VosDB server image'
+	@echo '           exec    - exec into the running standalone VosDB server'
+	@echo '           run     - start a standalone VosDB server (for testing)'
+	@echo '           stop    - stop the running standalone VosDB server'
+	@echo '           watch   - show logfile for the running standalone VosDB server'
 
 docker:
 	docker build -t ${IMG} .
 
 exec:
+	docker cp .bash_env ${NAME}:${ENVLOC}
 	docker exec -it ${NAME} bash
 
 run:
