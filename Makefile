@@ -1,5 +1,5 @@
 ENVLOC=/etc/trhenv
-IMG=vosdb
+IMG=vosdb:devel
 JOPTS=-Xms512m -Xmx8092m
 NAME=vosdb
 VOL=vos_pgdata
