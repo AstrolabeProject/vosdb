@@ -142,12 +142,3 @@ CREATE INDEX jcat_redshift_idx ON sia.jcat USING btree (redshift);
 -- Name: jcat_tau_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
 CREATE INDEX jcat_tau_idx ON sia.jcat USING btree (tau);
-
-
---
--- Set permissions to these tables for various users
---
-GRANT SELECT ON ALL TABLES IN SCHEMA sia TO alquery;
-GRANT SELECT ON ALL TABLES IN SCHEMA sia TO readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA sia TO readwrite;
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA sia TO readwrite;
