@@ -21,5 +21,5 @@ echo "Creating the Image tables in the SIA schema..."
 echo "Creating the Catalog tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeCatTables.sql
 
-echo "Setting the search_path..."
-/usr/bin/psql -U postgres -d vos -c 'SET search_path TO sia, tap_schema, public;'
+echo "Configuring the VOS Database..."
+/usr/bin/psql -U astrolabe -d vos -f /sql/configVosDB.sql

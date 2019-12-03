@@ -12,6 +12,7 @@ ALTER SCHEMA sia OWNER TO astrolabe;
 --
 GRANT USAGE ON SCHEMA sia TO alquery;
 GRANT USAGE ON SCHEMA sia TO readonly;
+GRANT USAGE ON SCHEMA sia TO tapuser;
 GRANT USAGE, CREATE ON SCHEMA sia TO readwrite;
 
 
