@@ -17,9 +17,9 @@ SET search_path TO sia, public;
 
 
 --
--- Name: jcat; Type: TABLE; Schema: sia; Owner: astrolabe
+-- Name: jaguar; Type: TABLE; Schema: sia; Owner: astrolabe
 --
-CREATE TABLE sia.jcat (
+CREATE TABLE sia.jaguar (
     galaxy_id integer,
     s_ra double precision,
     s_dec double precision,
@@ -103,42 +103,42 @@ CREATE TABLE sia.jcat (
     is_public integer
 );
 
-ALTER TABLE sia.jcat OWNER TO astrolabe;
+ALTER TABLE sia.jaguar OWNER TO astrolabe;
 
 
 --
--- Name: jcat_q3c_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jag_q3c_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jcat_q3c_idx ON sia.jcat USING btree (public.q3c_ang2ipix(s_ra, s_dec));
+CREATE INDEX jag_q3c_idx ON sia.jaguar USING btree (public.q3c_ang2ipix(s_ra, s_dec));
 
-ALTER TABLE sia.jcat CLUSTER ON jcat_q3c_idx;
-
-
---
--- Name: jcat_is_public_idx; Type: INDEX; Schema: sia; Owner: astrolabe
---
-CREATE INDEX jcat_is_public_idx ON sia.jcat USING btree (is_public);
+ALTER TABLE sia.jaguar CLUSTER ON jag_q3c_idx;
 
 
 --
--- Name: jcat_s_dec_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jag_is_public_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jcat_s_dec_idx ON sia.jcat USING btree (s_dec);
+CREATE INDEX jag_is_public_idx ON sia.jaguar USING btree (is_public);
 
 
 --
--- Name: jcat_s_ra_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jag_s_dec_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jcat_s_ra_idx ON sia.jcat USING btree (s_ra);
+CREATE INDEX jag_s_dec_idx ON sia.jaguar USING btree (s_dec);
 
 
 --
--- Name: jcat_redshift_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jag_s_ra_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jcat_redshift_idx ON sia.jcat USING btree (redshift);
+CREATE INDEX jag_s_ra_idx ON sia.jaguar USING btree (s_ra);
 
 
 --
--- Name: jcat_tau_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jag_redshift_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jcat_tau_idx ON sia.jcat USING btree (tau);
+CREATE INDEX jag_redshift_idx ON sia.jaguar USING btree (redshift);
+
+
+--
+-- Name: jag_tau_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX jag_tau_idx ON sia.jaguar USING btree (tau);
