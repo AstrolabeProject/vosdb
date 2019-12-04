@@ -18,8 +18,8 @@ echo "Creating the SIA schema and installing the Q3C extension ..."
 echo "Creating the Image tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeSiaTables.sql
 
-echo "Creating the Catalog tables in the SIA schema..."
-/usr/bin/psql -U astrolabe -d vos -f /sql/makeCatTables.sql
+echo "Creating the Jaguar Catalog table in the SIA schema..."
+/usr/bin/psql -U astrolabe -d vos -f /sql/makeJaguarTable.sql
 
 echo "Configuring the VOS Database..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/configVosDB.sql
