@@ -20,7 +20,7 @@ SET search_path TO sia, public;
 -- Name: jaguar; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 CREATE TABLE sia.jaguar (
-    galaxy_id integer,
+    jaguar_id integer,
     s_ra double precision,
     s_dec double precision,
     redshift double precision,
