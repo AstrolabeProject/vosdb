@@ -115,6 +115,12 @@ ALTER TABLE sia.jaguar CLUSTER ON jag_q3c_idx;
 
 
 --
+-- Name: jag_jaguar_id_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX jag_jaguar_id_idx ON sia.jaguar USING btree (jaguar_id);
+
+
+--
 -- Name: jag_is_public_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
 CREATE INDEX jag_is_public_idx ON sia.jaguar USING btree (is_public);
@@ -136,9 +142,3 @@ CREATE INDEX jag_s_ra_idx ON sia.jaguar USING btree (s_ra);
 -- Name: jag_redshift_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
 CREATE INDEX jag_redshift_idx ON sia.jaguar USING btree (redshift);
-
-
---
--- Name: jag_tau_idx; Type: INDEX; Schema: sia; Owner: astrolabe
---
-CREATE INDEX jag_tau_idx ON sia.jaguar USING btree (tau);
