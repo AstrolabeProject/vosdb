@@ -21,5 +21,8 @@ echo "Creating the Image tables in the SIA schema..."
 echo "Creating the Jaguar Catalog table in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeJaguarTable.sql
 
+echo "Creating other Catalog tables in the SIA schema..."
+/usr/bin/psql -U astrolabe -d vos -f /sql/makeCatalogs.sql
+
 echo "Configuring the VOS Database..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/configVosDB.sql
