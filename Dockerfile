@@ -1,4 +1,4 @@
-FROM postgres:10
+FROM postgres:10.11
 
 MAINTAINER Tom Hicks <hickst@email.arizona.edu>
 
