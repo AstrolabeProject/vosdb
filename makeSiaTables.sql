@@ -30,8 +30,8 @@ SET search_path TO sia, public;
 --     s_ra double precision,                  -- M. Center of field/image
 --     s_resolution double precision,          -- M. Spatial resolution of signal
 --     t_exptime double precision,             -- M. Total exposure time
---     t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
---     t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
+--     t_max double precision,                 -- M. stop time, in MJD
+--     t_min double precision,                 -- M. start time, in MJD
 --     t_resolution double precision,          -- M. Temporal resolution (FWHM)
 --     access_estsize integer,                 -- M. Estimated dataset size in kB
 --     calib_level integer,                    -- M. Dataset calibration level
@@ -71,8 +71,8 @@ CREATE TABLE sia.jwst (
     s_ra double precision,                  -- M. Center of field/image
     s_resolution double precision,          -- M. Spatial resolution of signal
     t_exptime double precision,             -- M. Total exposure time
-    t_max double precision,                 -- M. Temporal bandpass, upper limit, in MJD
-    t_min double precision,                 -- M. Temporal bandpass, lower limit, in MJD
+    t_max double precision,                 -- M. stop time, in MJD
+    t_min double precision,                 -- M. start time, in MJD
     t_resolution double precision,          -- M. Temporal resolution (FWHM)
     spat_lolimit1 double precision,         -- D. Min value of spatial limit along RA axis
     spat_hilimit1 double precision,         -- D. Max value of spatial limit along RA axis
