@@ -125,6 +125,60 @@ CREATE INDEX eazy356_s_ra_idx ON sia.eazy356 USING btree (s_ra);
 
 
 --
+-- Name: eazy_psf; Type: TABLE; Schema: sia; Owner: astrolabe
+--
+CREATE TABLE sia.eazy_psf (
+    id integer,
+    s_ra double precision,
+    s_dec double precision,
+    z_spec double precision,
+    z_a double precision,
+    z_m1 double precision,
+    chi_a double precision,
+    l68 double precision,
+    u68 double precision,
+    l95 double precision,
+    u95 double precision,
+    l99 double precision,
+    u99 double precision,
+    nfilt double precision,
+    q_z double precision,
+    z_peak double precision,
+    z_prob double precision,
+    z_mc double precision
+);
+
+ALTER TABLE sia.eazy_psf OWNER TO astrolabe;
+
+
+--
+-- Name: eazy_psf_q3c_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX eazy_psf_q3c_idx ON sia.eazy_psf USING btree (public.q3c_ang2ipix(s_ra, s_dec));
+
+ALTER TABLE sia.eazy_psf CLUSTER ON eazy_psf_q3c_idx;
+
+
+--
+-- Name: eazy_psf_id_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX eazy_psf_id_idx ON sia.eazy_psf USING btree (id);
+
+
+--
+-- Name: eazy_psf_s_dec_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX eazy_psf_s_dec_idx ON sia.eazy_psf USING btree (s_dec);
+
+
+--
+-- Name: eazy_psf_s_ra_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+CREATE INDEX eazy_psf_s_ra_idx ON sia.eazy_psf USING btree (s_ra);
+
+
+
+--
 -- Name: photometric200; Type: TABLE; Schema: sia; Owner: astrolabe
 --
 CREATE TABLE sia.photometric200 (
