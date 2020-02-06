@@ -32,6 +32,3 @@ stop:
 
 watch:
 	docker logs -f ${NAME}
-
-%:
-	@:
