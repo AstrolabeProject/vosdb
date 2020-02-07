@@ -24,7 +24,7 @@ echo "Creating the Jaguar Catalog table in the SIA schema..."
 echo "Creating other JADES Catalog tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeCatalogs.sql
 
-echo "Creating mini Data Challeng Catalog tables in the SIA schema..."
+echo "Creating mini Data Challenge Catalog tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeDCCatalogs.sql
 
 echo "Configuring the VOS Database..."
