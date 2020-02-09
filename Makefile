@@ -1,7 +1,8 @@
 ENVLOC=/etc/trhenv
 IMG=vosdb:devel
 JOPTS=-Xms512m -Xmx8092m
-NAME=vosdb
+NAME=pgdb
+NET=test_net
 VOL=vos_pgdata
 PORT=5432
 
@@ -12,7 +13,7 @@ help:
 	@echo '    where: help    - show this help message'
 	@echo '           docker  - build a VosDB server image'
 	@echo '           exec    - exec into the running standalone VosDB server'
-	@echo '           run     - start a standalone VosDB server (for testing)'
+	@echo '           runt    - start a standalone VosDB server (for testing)'
 	@echo '           stop    - stop the running standalone VosDB server'
 	@echo '           watch   - show logfile for the running standalone VosDB server'
 
@@ -23,12 +24,14 @@ exec:
 	docker cp .bash_env ${NAME}:${ENVLOC}
 	docker exec -it ${NAME} bash
 
-run:
-	docker run -d --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
+runt:
+	docker network create --attachable ${NET}
+	docker run -d --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:
 	docker stop ${NAME}
 	-docker rm ${NAME}
+	docker network rm ${NET}
 
 watch:
 	docker logs -f ${NAME}
