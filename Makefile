@@ -29,8 +29,7 @@ runt:
 	docker run -d --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:
-	docker stop ${NAME}
-	-docker rm ${NAME}
+	-docker rm -f ${NAME}
 	docker network rm ${NET}
 
 watch:
