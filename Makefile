@@ -32,7 +32,7 @@ reset: stop
 	-docker network rm ${NET}
 
 runt:
-	docker network create --attachable ${NET}
+	-docker network create --attachable ${NET}
 	docker run -d --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:
