@@ -176,28 +176,26 @@ CREATE INDEX jwst_s_dec_idx ON sia.jwst USING btree (s_dec);
 --
 CREATE INDEX jwst_s_ra_idx ON sia.jwst USING btree (s_ra);
 
-
 --
--- Name: jwst_t_exptime_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+-- Name: jwst_file_path_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
-CREATE INDEX jwst_t_exptime_idx ON sia.jwst USING btree (t_exptime);
-
-
---
--- Name: jwst_t_min_idx; Type: INDEX; Schema: sia; Owner: astrolabe
---
-CREATE INDEX jwst_t_min_idx ON sia.jwst USING btree (t_min);
-
-
---
--- Name: jwst_fileref_idx; Type: INDEX; Schema: sia; Owner: astrolabe
---
--- CREATE INDEX jwst_fileref_idx ON sia.jwst USING btree (fileref);
+CREATE INDEX jwst_file_path_idx ON sia.jwst USING btree (file_path);
 
 --
 -- Name: jwst_filter_idx; Type: INDEX; Schema: sia; Owner: astrolabe
 --
--- CREATE INDEX jwst_filter_idx ON sia.jwst USING btree (filter);
+CREATE INDEX jwst_filter_idx ON sia.jwst USING btree (filter);
+
+
+--
+-- Name: jwst_t_exptime_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+-- CREATE INDEX jwst_t_exptime_idx ON sia.jwst USING btree (t_exptime);
+
+--
+-- Name: jwst_t_min_idx; Type: INDEX; Schema: sia; Owner: astrolabe
+--
+-- CREATE INDEX jwst_t_min_idx ON sia.jwst USING btree (t_min);
 
 --
 -- Name: jwst_mjd_obs_idx; Type: INDEX; Schema: sia; Owner: astrolabe
