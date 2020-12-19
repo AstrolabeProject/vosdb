@@ -29,7 +29,7 @@ exec:
 
 reset: stop
 	-docker rm -f ${NAME}
-	-docker network rm ${NET}
+	# -docker network rm ${NET}
 
 runt:
 	-docker network create -d overlay --attachable ${NET}
