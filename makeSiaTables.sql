@@ -33,6 +33,7 @@ SET search_path TO sia, public;
 --     t_max double precision,                 -- M. stop time, in MJD
 --     t_min double precision,                 -- M. start time, in MJD
 --     t_resolution double precision,          -- M. Temporal resolution (FWHM)
+--     file_size bigint,                       -- C. size of FITS file in bytes
 --     access_estsize integer,                 -- M. Estimated dataset size in kB
 --     calib_level integer,                    -- M. Dataset calibration level
 --     em_xel integer,                         -- M. Number elements along the spectral axis
@@ -87,6 +88,7 @@ CREATE TABLE sia.jwst (
     im_dec3 double precision,               -- D. DEC of upper right corner of image
     im_ra4 double precision,                -- D. RA  of lower right corner of image
     im_dec4 double precision,               -- D. DEC of lower right corner of image
+    file_size bigint,                       -- C. size of FITS file in bytes
     access_estsize integer,                 -- M. Estimated dataset size in kB
     calib_level integer,                    -- M. Dataset calibration level
     im_naxes integer,                       -- D. Number of physical image axes
