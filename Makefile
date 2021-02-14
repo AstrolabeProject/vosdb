@@ -43,9 +43,10 @@ execdb:
 
 reset: stop
 	-docker rm -f ${NAME}
-	# -docker network rm ${NET}
+	-docker network rm ${NET}
 
 run:
+	-docker network create -d overlay --attachable ${NET}
 	docker run -d --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:
