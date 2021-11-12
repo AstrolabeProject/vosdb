@@ -1,6 +1,5 @@
 ENVLOC=/etc/trhenv
-BOOTIMG=astrolabe/vosdb:4.1
-IMG=vosdb:devel
+IMG=astrolabe/vosdb
 JOPTS=-Xms512m -Xmx8092m
 NAME=pgdb
 NET=vos_net
@@ -24,8 +23,8 @@ help:
 	@echo '     watch   - show logfile for the running standalone ${PROG} server'
 
 boot:
-	-docker network create -d overlay --attachable ${NET}
-	docker run -d -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${BOOTIMG}
+	-docker network create -d bridge --attachable ${NET}
+	docker run -d -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 docker:
 	docker build -t ${IMG} .
@@ -46,7 +45,7 @@ reset: stop
 	-docker network rm ${NET}
 
 run:
-	-docker network create -d overlay --attachable ${NET}
+	-docker network create -d bridge --attachable ${NET}
 	docker run -d --network ${NET} --name ${NAME} -p ${PORT}:5432 -v ${VOL}:/var/lib/postgresql/data ${IMG}
 
 stop:

@@ -1,9 +1,9 @@
-FROM postgres:10.15
+FROM postgres:14
 
 MAINTAINER Tom Hicks <hickst@email.arizona.edu>
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends postgresql-q3c \
+    && apt-get install -y --no-install-recommends postgresql-14-q3c \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
