@@ -3,5 +3,6 @@
 addSelfSuperuser.sql
 Dockerfile
 docker-compose.yml
+/EXTRAS
 Makefile
 pgdata

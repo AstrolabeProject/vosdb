@@ -1,3 +1,4 @@
 .pgpass
 pgdata
 addSelfSuperuser.sql
+/EXTRAS
