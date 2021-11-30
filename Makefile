@@ -1,9 +1,9 @@
 ENVLOC=/etc/trhenv
-IMG=astrolabe/vosdb
+IMG=astrolabe/vosdb:imgmd
 JOPTS=-Xms512m -Xmx8092m
-NAME=pgdb
+NAME=imgdb
 NET=vos_net
-VOL=vos_pgdata
+VOL=vos_imgmd
 PORT=5432
 PROG=VosDB
 PGDB=$(shell docker container ls --filter name=pgdb -q)
