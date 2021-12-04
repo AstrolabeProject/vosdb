@@ -62,8 +62,3 @@ CREATE TABLE tap_schema.key_columns (
 
     foreign key (key_id) references tap_schema.keys (key_id)
 );
-
-GRANT SELECT ON ALL TABLES IN SCHEMA tap_schema TO tapuser;
-GRANT SELECT ON ALL TABLES IN SCHEMA tap_schema TO readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA tap_schema TO readwrite;
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA tap_schema TO readwrite;

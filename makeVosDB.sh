@@ -1,19 +1,22 @@
 #!/bin/bash
 
-echo "Creating the VOS Database and Users ..."
+echo "Creating the VOS Database and Roles..."
 /usr/bin/psql -U postgres -d postgres -f /sql/makeVosDB.sql
+
+echo "Creating the SIA schema and installing the Q3C extension ..."
+/usr/bin/psql -U postgres -d vos -f /sql/makeSiaSchema.sql
 
 echo "Creating the TAP schema in the TAP schema..."
 /usr/bin/psql -U postgres -d vos -f /sql/makeTapSchema.sql
+
+echo "Creating the Users ..."
+/usr/bin/psql -U postgres -d vos -f /sql/configVosDB.sql
 
 echo "Creating the TAP tables in the TAP schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeTapTables.sql
 
 echo "Loading the TAP-self (reflexive) data into the TAP tables in the TAP schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeTapSelfTables.sql
-
-echo "Creating the SIA schema and installing the Q3C extension ..."
-/usr/bin/psql -U postgres -d vos -f /sql/makeSiaSchema.sql
 
 echo "Creating the Image tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeSiaTables.sql
@@ -29,6 +32,3 @@ echo "Creating other JADES Catalog tables in the SIA schema..."
 
 echo "Creating mini Data Challenge Catalog tables in the SIA schema..."
 /usr/bin/psql -U astrolabe -d vos -f /sql/makeDCCatalogs.sql
-
-echo "Configuring the VOS Database..."
-/usr/bin/psql -U astrolabe -d vos -f /sql/configVosDB.sql
