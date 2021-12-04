@@ -3,12 +3,14 @@
 --
 
 --
--- Set permissions for Hybrid tables for various users
+-- Create database users and grant them existing roles.
 --
-GRANT SELECT ON ALL TABLES IN SCHEMA hyb TO alquery;
-GRANT SELECT ON ALL TABLES IN SCHEMA hyb TO readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA hyb TO readwrite;
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA hyb TO readwrite;
+CREATE USER astrolabe WITH ENCRYPTED PASSWORD 'changeMe';
+GRANT readwrite TO astrolabe;
+ALTER SCHEMA hyb OWNER TO astrolabe;
+
+CREATE USER alquery WITH ENCRYPTED PASSWORD 'changeMe';
+GRANT readonly TO alquery;
 
 
 --
