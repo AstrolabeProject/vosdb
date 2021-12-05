@@ -12,6 +12,6 @@
 \set PROMPT2 '... > '
 \set VERBOSITY verbose
 
-set search_path to sia, tap_schema, public
+set search_path to hyb, public;
 
 -- \unset QUIET
