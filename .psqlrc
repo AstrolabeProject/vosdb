@@ -12,6 +12,12 @@
 \set PROMPT2 '... > '
 \set VERBOSITY verbose
 
-set search_path to sia, tap_schema, public;
+select exists(select schema_name from information_schema.schemata where schema_name = 'hyb') as is_al2
+\gset
+\if :is_al2
+    set search_path to hyb, public;
+\else
+    set search_path to sia, tap_schema, public;
+\endif
 
 -- \unset QUIET
