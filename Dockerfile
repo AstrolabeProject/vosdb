@@ -7,8 +7,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts/
-COPY makeVosDB.sql makeALAdminDB.sql makeSiaSchema.sql makeSiaTables.sql makeJaguarTable.sql \
-     makeCatalogs.sql makeDCCatalogs.sql makeHybridTables.sql \
-     makeTapSchema.sql makeTapTables.sql makeTapSelfTables.sql configVosDB.sql ./sql/
+RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts /sql
+COPY sql /sql
 COPY makeVosDB.sh /docker-entrypoint-initdb.d/
