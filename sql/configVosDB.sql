@@ -5,12 +5,20 @@
 --
 -- Create database users and grant them existing roles.
 --
-CREATE USER astrolabe WITH ENCRYPTED PASSWORD 'changeMe';
-GRANT readwrite TO astrolabe;
-ALTER SCHEMA hyb OWNER TO astrolabe;
+CREATE USER astrolabe WITH
+  CREATEDB
+  IN ROLE readwrite
+  ENCRYPTED PASSWORD 'changeMe';
+ALTER SCHEMA sia OWNER TO astrolabe;
+ALTER SCHEMA tap_schema OWNER TO astrolabe;
 
-CREATE USER alquery WITH ENCRYPTED PASSWORD 'changeMe';
-GRANT readonly TO alquery;
+CREATE USER alquery WITH
+  IN ROLE readonly
+  ENCRYPTED PASSWORD 'changeMe';
+
+CREATE USER tapuser WITH
+  IN ROLE readonly
+  ENCRYPTED PASSWORD 'changeMe';
 
 
 --
