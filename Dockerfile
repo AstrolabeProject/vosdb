@@ -7,6 +7,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts/
-COPY makeVosDB.sql makeHybridSchema.sql makeImageTables.sql configVosDB.sql ./sql/
+RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts /sql
+COPY sql /sql
 COPY makeVosDB.sh /docker-entrypoint-initdb.d/
