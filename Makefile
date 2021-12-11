@@ -12,14 +12,13 @@ SHELL=/bin/bash
 .PHONY: help boot docker exec execdb mknet stop watch
 
 help:
-	@echo "Make what? Try: bash, boot, docker, exec, execdb, reset, run, stop, watch"
+	@echo "Make what? Try: bash, boot, docker, execdb, reset, run, stop, watch"
 	@echo '  where:'
 	@echo '     help    - show this help message'
 	@echo '     bash    - run Bash in a ${PROG} container (for development)'
 	@echo '     boot    - initialize a ${PROG} server (set POSTGRES_PASSWORD env var first)'
 	@echo '     docker  - build a ${PROG} server image'
-	@echo '     exec    - exec into a named, running server (NAME=server-name)'
-	@echo '     execdb  - exec into the running ${PROG} server'
+	@echo '     execdb  - exec into the named (running) server (default: ${NAME})'
 	@echo '     reset   - stop the running ${PROG} container, force its removal, and cleanup'
 	@echo '     run     - start a standalone ${PROG} server (for development)'
 	@echo '     stop    - stop the running DB server (${PROG} or TestDB)'
@@ -33,16 +32,10 @@ boot: mknet
 docker:
 	docker build -t ${IMG} .
 
-exec:
+execdb:
 	docker cp .bash_env ${NAME}:${ENVLOC}
 	docker cp .psqlrc   ${NAME}:/root
 	docker exec -it ${NAME} bash
-
-execdb:
-	echo "EXECing into PGDB container ${PGDB}"
-	docker cp .bash_env ${PGDB}:${ENVLOC}
-	docker cp .psqlrc   ${PGDB}:/root
-	docker exec -it ${PGDB} bash
 
 mknet:
 	-docker network create -d bridge --attachable ${NET}
