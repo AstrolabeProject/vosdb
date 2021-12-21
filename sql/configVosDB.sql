@@ -9,14 +9,9 @@ CREATE USER astrolabe WITH
   CREATEDB
   IN ROLE readwrite
   ENCRYPTED PASSWORD 'changeMe';
-ALTER SCHEMA sia OWNER TO astrolabe;
-ALTER SCHEMA tap_schema OWNER TO astrolabe;
+ALTER SCHEMA hyb OWNER TO astrolabe;
 
 CREATE USER alquery WITH
-  IN ROLE readonly
-  ENCRYPTED PASSWORD 'changeMe';
-
-CREATE USER tapuser WITH
   IN ROLE readonly
   ENCRYPTED PASSWORD 'changeMe';
 

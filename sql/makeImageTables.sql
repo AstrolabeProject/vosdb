@@ -17,19 +17,30 @@ SET search_path TO hyb, public;
 
 
 --
+-- Name: collections; Type: TABLE; Schema: hyb; Owner: astrolabe
+--
+CREATE TABLE hyb.collections (
+    id serial PRIMARY KEY,                       -- D. Auto-incrementing primary key
+    coll_name character varying(32) UNIQUE,      -- M. Data collection name
+    coll_description character varying(128)      -- M. Data collection description
+);
+
+ALTER TABLE hyb.collections OWNER TO astrolabe;
+
+
+--
 -- Name: imgmd; Type: TABLE; Schema: hyb; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
 --            C=Custom,  D=DALserver-specific,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
 --
 CREATE TABLE hyb.imgmd (
-    id serial primary key,                  -- D. Auto-incrementing primary key
-    s_dec double precision,                 -- M. Center of field/image
-    s_ra double precision,                  -- M. Center of field/image
-    obs_collection character varying(64),   -- M. Data collection name
-    md5sum character(32),                   -- C. MD5 sum of the image
-    is_public integer,                      -- C. Is this record available to the public?
-    metadata jsonb                          -- C. All image metadata
+    md5sum character(32) PRIMARY KEY,         -- C. MD5 hash of the image file
+    s_ra double precision NOT NULL,           -- M. Center of field/image
+    s_dec double precision NOT NULL,          -- M. Center of field/image
+    is_public boolean NOT NULL DEFAULT FALSE, -- C. Is this record available to the public?
+    obs_collection integer REFERENCES collections, -- collection name
+    md jsonb                                  -- C. All other image metadata
 );
 
 ALTER TABLE hyb.imgmd OWNER TO astrolabe;
@@ -74,6 +85,6 @@ CREATE INDEX hyb_is_public_idx ON hyb.imgmd USING btree (is_public);
 
 
 --
--- Name: hyb_metadata_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: hyb_md_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_metadata_idx ON hyb.imgmd USING GIN (metadata);
+CREATE INDEX hyb_md_idx ON hyb.imgmd USING GIN (md);

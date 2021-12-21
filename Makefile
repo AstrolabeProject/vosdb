@@ -16,7 +16,7 @@ help:
 	@echo '  where:'
 	@echo '     help    - show this help message'
 	@echo '     bash    - run Bash in a ${PROG} container (for development)'
-	@echo '     boot    - initialize a ${PROG} server (set POSTGRES_PASSWORD env var first)'
+	@echo '     boot    - initialize a ${PROG} server (use Make variable POSTGRES_PASSWORD)'
 	@echo '     docker  - build a ${PROG} server image'
 	@echo '     execdb  - exec into the named (running) server (default: ${NAME})'
 	@echo '     reset   - stop the running ${PROG} container, force its removal, and cleanup'
