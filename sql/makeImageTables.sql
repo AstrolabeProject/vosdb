@@ -17,18 +17,6 @@ SET search_path TO hyb, public;
 
 
 --
--- Name: collections; Type: TABLE; Schema: hyb; Owner: astrolabe
---
-CREATE TABLE hyb.collections (
-    id serial PRIMARY KEY,                       -- D. Auto-incrementing primary key
-    coll_name character varying(32) UNIQUE,      -- M. Data collection name
-    coll_description character varying(128)      -- M. Data collection description
-);
-
-ALTER TABLE hyb.collections OWNER TO astrolabe;
-
-
---
 -- Name: imgmd; Type: TABLE; Schema: hyb; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
@@ -39,8 +27,8 @@ CREATE TABLE hyb.imgmd (
     s_ra double precision NOT NULL,           -- M. Center of field/image
     s_dec double precision NOT NULL,          -- M. Center of field/image
     is_public boolean NOT NULL DEFAULT FALSE, -- C. Is this record available to the public?
-    obs_collection integer REFERENCES collections, -- collection name
-    md jsonb                                  -- C. All other image metadata
+    obs_collection character varying(64),     -- M. Collection name
+    md jsonb                                  -- C. All image metadata
 );
 
 ALTER TABLE hyb.imgmd OWNER TO astrolabe;
@@ -70,12 +58,6 @@ CREATE INDEX hyb_s_ra_idx ON hyb.imgmd USING btree (s_ra);
 -- Name: hyb_obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
 CREATE INDEX hyb_obs_coll_idx ON hyb.imgmd USING btree (obs_collection);
-
-
---
--- Name: hyb_md5sum_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
---
-CREATE INDEX hyb_md5sum_idx ON hyb.imgmd USING btree (md5sum);
 
 
 --
