@@ -20,15 +20,16 @@ SET search_path TO hyb, public;
 -- Name: imgmd; Type: TABLE; Schema: hyb; Owner: astrolabe
 --
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
---            C=Custom,  D=DALserver-specific,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
+--            C=Custom,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
 --
 CREATE TABLE hyb.imgmd (
-    md5sum character(32) PRIMARY KEY,         -- C. MD5 hash of the image file
-    s_ra double precision NOT NULL,           -- M. Center of field/image
-    s_dec double precision NOT NULL,          -- M. Center of field/image
-    is_public boolean NOT NULL DEFAULT FALSE, -- C. Is this record available to the public?
-    obs_collection character varying(64),     -- M. Collection name
-    md jsonb                                  -- C. All image metadata
+    md5sum character(32) PRIMARY KEY,                -- C. MD5 hash of the image file
+    s_ra double precision NOT NULL,                  -- M. Center of field/image
+    s_dec double precision NOT NULL,                 -- M. Center of field/image
+    is_public boolean NOT NULL DEFAULT FALSE,        -- C. Is this record available to the public?
+    obs_collection character varying(64),            -- M. Collection name
+    file_name character varying(64) NOT NULL UNIQUE, -- C. Name of FITS file
+    md jsonb                                         -- C. All image metadata
 );
 
 ALTER TABLE hyb.imgmd OWNER TO astrolabe;
@@ -55,15 +56,15 @@ CREATE INDEX hyb_s_ra_idx ON hyb.imgmd USING btree (s_ra);
 
 
 --
--- Name: hyb_obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
---
-CREATE INDEX hyb_obs_coll_idx ON hyb.imgmd USING btree (obs_collection);
-
-
---
 -- Name: hyb_is_public_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
 CREATE INDEX hyb_is_public_idx ON hyb.imgmd USING btree (is_public);
+
+
+--
+-- Name: hyb_obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+--
+CREATE INDEX hyb_obs_coll_idx ON hyb.imgmd USING btree (obs_collection);
 
 
 --
