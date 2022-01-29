@@ -1,7 +1,7 @@
 --
 -- Make Image Metadata (JSON) tables and indices in the VOS database.
---   This script assumes that the database 'vos', astro users, and the schema 'hyb'
---   have all been created and that this script is run within that DB and schema.
+--   This script assumes that the database 'alws', and astro users
+--   have been created and that this script is run within that DB and schema.
 --
 
 SET check_function_bodies = false;
@@ -13,8 +13,6 @@ SET standard_conforming_strings = on;
 SET statement_timeout = 0;
 SET timezone = 'UTC';
 
-SET search_path TO hyb, public;
-
 
 --
 -- Name: imgmd; Type: TABLE; Schema: hyb; Owner: astrolabe
@@ -22,7 +20,7 @@ SET search_path TO hyb, public;
 --    Legend: M=Mandatory, O=Optional (ObsCore v1.1),
 --            C=Custom,  F=FITS (Standard 4, 8/13/2018),  J=JWST-specific
 --
-CREATE TABLE hyb.imgmd (
+CREATE TABLE imgmd (
     md5sum character(32) PRIMARY KEY,                -- C. MD5 hash of the image file
     s_ra double precision NOT NULL,                  -- M. Center of field/image
     s_dec double precision NOT NULL,                 -- M. Center of field/image
@@ -34,42 +32,42 @@ CREATE TABLE hyb.imgmd (
     md jsonb                                         -- C. All image metadata
 );
 
-ALTER TABLE hyb.imgmd OWNER TO astrolabe;
+ALTER TABLE imgmd OWNER TO astrolabe;
 
 
 --
--- Name: hyb_q3c_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: imgmd_q3c_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_q3c_idx ON hyb.imgmd USING btree (public.q3c_ang2ipix(s_ra, s_dec));
+CREATE INDEX q3c_idx ON imgmd USING btree(q3c_ang2ipix(s_ra, s_dec));
 
-ALTER TABLE hyb.imgmd CLUSTER ON hyb_q3c_idx;
-
-
---
--- Name: hyb_s_dec_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
---
-CREATE INDEX hyb_s_dec_idx ON hyb.imgmd USING btree (s_dec);
+ALTER TABLE imgmd CLUSTER ON q3c_idx;
 
 
 --
--- Name: hyb_s_ra_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: s_dec_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_s_ra_idx ON hyb.imgmd USING btree (s_ra);
+CREATE INDEX s_dec_idx ON imgmd USING btree (s_dec);
 
 
 --
--- Name: hyb_is_public_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: s_ra_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_is_public_idx ON hyb.imgmd USING btree (is_public);
+CREATE INDEX s_ra_idx ON imgmd USING btree (s_ra);
 
 
 --
--- Name: hyb_obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: is_public_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_obs_coll_idx ON hyb.imgmd USING btree (obs_collection);
+CREATE INDEX is_public_idx ON imgmd USING btree (is_public);
 
 
 --
--- Name: hyb_md_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX hyb_md_idx ON hyb.imgmd USING GIN (md);
+CREATE INDEX obs_coll_idx ON imgmd USING btree (obs_collection);
+
+
+--
+-- Name: md_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+--
+CREATE INDEX md_idx ON imgmd USING GIN (md);

@@ -1,12 +1,12 @@
 ENVLOC=/etc/trhenv
-IMG=astrolabe/vosdb:imgmd
+IMG=astrolabe/vosdb:alws
 JOPTS=-Xms512m -Xmx8092m
-NAME=imgdb
+NAME=alwsdb
 NET=vos_net
-VOL=vos_imgmd
+VOL=vos_alwsdb
 PORT=5432
 PROG=VosDB
-PGDB=$(shell docker container ls --filter name=pgdb -q)
+# PGDB=$(shell docker container ls --filter name=pgdb -q)
 SHELL=/bin/bash
 
 .PHONY: help boot docker exec execdb mknet stop watch

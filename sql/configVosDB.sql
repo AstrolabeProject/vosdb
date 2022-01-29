@@ -1,15 +1,10 @@
 --
--- Final setup and configuration for the VOS database.
---
-
---
 -- Create database users and grant them existing roles.
 --
 CREATE USER astrolabe WITH
   CREATEDB
   IN ROLE readwrite
   ENCRYPTED PASSWORD 'changeMe';
-ALTER SCHEMA hyb OWNER TO astrolabe;
 
 CREATE USER alquery WITH
   IN ROLE readonly
@@ -17,6 +12,7 @@ CREATE USER alquery WITH
 
 
 --
--- set the search_path to include the Hybrid and public schemas
----
-SET search_path TO hyb, public;
+-- Add the Q3C extension, which is needed for indexing.
+-- NB: Extensions can only be created by a user with the Superuser attribute.
+--
+CREATE EXTENSION IF NOT EXISTS q3c;
