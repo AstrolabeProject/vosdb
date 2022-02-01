@@ -25,7 +25,7 @@ CREATE TABLE imgmd (
     s_ra double precision NOT NULL,                  -- M. Center of field/image
     s_dec double precision NOT NULL,                 -- M. Center of field/image
     is_public boolean NOT NULL DEFAULT FALSE,        -- C. Is this record available to the public?
-    obs_collection character varying(64),            -- M. Collection name
+    obs_collection character varying(64) NOT NULL,   -- M. Collection name
     file_name character varying(64) NOT NULL UNIQUE, -- C. Name of FITS file
     file_size bigint NOT NULL                        -- C. size of FITS file in bytes
       CONSTRAINT non_empty_file CHECK (file_size > 0),
