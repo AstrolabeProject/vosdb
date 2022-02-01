@@ -29,6 +29,7 @@ CREATE TABLE imgmd (
     file_name character varying(64) NOT NULL UNIQUE, -- C. Name of FITS file
     file_size bigint NOT NULL                        -- C. size of FITS file in bytes
       CONSTRAINT non_empty_file CHECK (file_size > 0),
+    filter character varying (16),                   -- J. Name of filter element used
     md jsonb                                         -- C. All image metadata
 );
 
@@ -65,6 +66,12 @@ CREATE INDEX is_public_idx ON imgmd USING btree (is_public);
 -- Name: obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
 CREATE INDEX obs_coll_idx ON imgmd USING btree (obs_collection);
+
+
+--
+-- Name: obs_filt_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+--
+CREATE INDEX obs_filt_idx ON imgmd USING btree (filter);
 
 
 --
