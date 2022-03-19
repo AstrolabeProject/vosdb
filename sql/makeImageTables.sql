@@ -23,10 +23,10 @@ SET timezone = 'UTC';
 CREATE TABLE imgmd (
     md5sum character(32) PRIMARY KEY,                -- C. MD5 hash of the image file
     file_info character varying(128) NOT NULL UNIQUE, -- C. Name of FITS file
-    s_ra double precision NOT NULL,                  -- M. Center of field/image
-    s_dec double precision NOT NULL,                 -- M. Center of field/image
+    ra double precision NOT NULL,                    -- M. Center of field/image
+    dec double precision NOT NULL,                   -- M. Center of field/image
     is_public boolean NOT NULL DEFAULT FALSE,        -- C. Is this record available to the public?
-    obs_collection character varying(64) NOT NULL,   -- M. Collection name
+    collection character varying(64) NOT NULL,       -- M. Collection name
     filter character varying (16),                   -- J. Name of filter element used
     md jsonb                                         -- C. All image metadata
 );
@@ -37,21 +37,21 @@ ALTER TABLE imgmd OWNER TO astrolabe;
 --
 -- Name: imgmd_q3c_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX imgmd_q3c_idx ON imgmd USING btree(q3c_ang2ipix(s_ra, s_dec));
+CREATE INDEX imgmd_q3c_idx ON imgmd USING btree(q3c_ang2ipix(ra, dec));
 
 ALTER TABLE imgmd CLUSTER ON imgmd_q3c_idx;
 
 
 --
--- Name: imgmd_s_dec_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: imgmd_dec_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX imgmd_s_dec_idx ON imgmd USING btree (s_dec);
+CREATE INDEX imgmd_dec_idx ON imgmd USING btree (dec);
 
 
 --
--- Name: imgmd_s_ra_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
+-- Name: imgmd_ra_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX imgmd_s_ra_idx ON imgmd USING btree (s_ra);
+CREATE INDEX imgmd_ra_idx ON imgmd USING btree (ra);
 
 
 --
@@ -63,7 +63,7 @@ CREATE INDEX imgmd_is_public_idx ON imgmd USING btree (is_public);
 --
 -- Name: imgmd_obs_coll_idx; Type: INDEX; Schema: hyb; Owner: astrolabe
 --
-CREATE INDEX imgmd_obs_coll_idx ON imgmd USING btree (obs_collection);
+CREATE INDEX imgmd_obs_coll_idx ON imgmd USING btree (collection);
 
 
 --
