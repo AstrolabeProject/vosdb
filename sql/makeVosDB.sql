@@ -1,5 +1,5 @@
 --
--- Create a separate database for the IVOA Astrolabe project.
+-- Create a separate database for the Astrolabe/JWST project.
 --
 CREATE DATABASE alws;
 

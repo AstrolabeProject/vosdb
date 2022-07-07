@@ -1,5 +1,5 @@
 --
--- Make Image Metadata (JSON) tables and indices in the VOS database.
+-- Make Image Metadata (JSON) tables and indices in the ALWS database.
 --   This script assumes that the database 'alws', and astro users
 --   have been created and that this script is run within that DB.
 --

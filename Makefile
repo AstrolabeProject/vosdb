@@ -1,11 +1,11 @@
 ENVLOC=/etc/trhenv
-IMG=astrolabe/vosdb:alws
+IMG=astrolabe/alwsdb:1.0
 JOPTS=-Xms512m -Xmx8092m
 NAME=alwsdb
 NET=vos_net
 VOL=vos_alwsdb
 PORT=5432
-PROG=VosDB
+PROG=ALWSDB
 # PGDB=$(shell docker container ls --filter name=pgdb -q)
 SHELL=/bin/bash
 

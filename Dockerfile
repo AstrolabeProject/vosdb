@@ -9,4 +9,4 @@ RUN apt-get update \
 
 RUN mkdir -p /docker-entrypoint-initdb.d /data /scripts /sql
 COPY sql /sql
-COPY makeVosDB.sh /docker-entrypoint-initdb.d/
+COPY makeDB.sh /docker-entrypoint-initdb.d/
